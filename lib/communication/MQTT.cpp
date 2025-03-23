@@ -1,7 +1,7 @@
 #include "MQTT.h"
 #include "global.h"
 
-
+Fan fanDevice;
 void connectWifi() {
   WiFi.begin((char*)WIFI_SSID, WIFI_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
@@ -27,21 +27,25 @@ void setupMQTT() {
   
 
 void reconnect() {
-    while (!client.connected()) {
-      Serial.print("Attempting MQTT connection...");
-      if (client.connect("ESP32Client", MQTT_USER, MQTT_API_KEY)) {
-        Serial.println("connected");
-        client.subscribe(TOPIC_SUB_FAN);
-        // ...
-      } else {
-        Serial.print("failed, rc=");
-        Serial.print(client.state());
-        Serial.println(" try again in 2 seconds");
-        delay(2000);
-      }
+
+    Serial.print("Attempting MQTT connection...");
+    if (client.connect("ESP32Client", MQTT_USER, MQTT_API_KEY)) {
+      Serial.println("connected");
+      client.subscribe(TOPIC_SUB_FAN);
+      // ...
+    } else {
+      Serial.print("failed, rc=");
+      Serial.print(client.state());
+      Serial.println(" try again in 2 seconds");
+      delay(2000);
     }
+
 }
 void mqttCallback(char* topic, byte* payload, unsigned int length){
+    Serial.print("mqttCallback: ");
+    while (!client.connected()) {
+        reconnect();
+    }
     String topicStr = topic;
     String message;
     for (int i = 0; i < length; i++) {

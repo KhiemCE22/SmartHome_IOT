@@ -4,6 +4,8 @@
 #include "global.h"
 #include "device.h"
 
+
+extern Fan fanDevice;
 void connectWifi();
 void setupMQTT();
 void reconnect();

@@ -1,4 +1,4 @@
-#include "task.h"
+#include "tasks.h"
 
 void mqttTask(void* param) {
     while (true) {
@@ -6,7 +6,7 @@ void mqttTask(void* param) {
             setupMQTT();
         }
         client.loop();
-        vTaskDelay(pdMS_TO_TICKS(10));
+        vTaskDelay(pdMS_TO_TICKS(500));
     }
 }
 
@@ -24,7 +24,10 @@ void TimerTask(void* param) {
         vTaskDelay(pdMS_TO_TICKS(60000)); // every minute
     }
 }
+
+// note : check race condition
 void sensorTask(void* param) {
+    Serial.println("Sensor task started");
     while (true) {
         readTemperature();
         readHumidity();
@@ -33,7 +36,7 @@ void sensorTask(void* param) {
         client.publish(TOPIC_PUB_TEMP, message.c_str());
         message = String(humidityValue);
         client.publish(TOPIC_PUB_HUMIDITY, message.c_str());
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        vTaskDelay(pdMS_TO_TICKS(5000));
     }
 }
 
