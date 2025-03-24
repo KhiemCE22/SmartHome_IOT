@@ -1,10 +1,11 @@
 #ifndef __TASK_H__
 #define __TASK_H__
-#include "global.h"
+#include <Arduino.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/semphr.h>
 #include "device.h"
 #include "sensors.h"
 #include "MQTT.h"
-
 
 struct TaskParams {
     Device* device;

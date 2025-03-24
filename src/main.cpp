@@ -18,9 +18,13 @@ void setup() {
   doorQueue = xQueueCreate(10, sizeof(EventData));
   fanQueue = xQueueCreate(10, sizeof(EventData));
   lightQueue = xQueueCreate(10, sizeof(EventData));
-
-  QueueHandle_t queues[] = {fanQueue};
   TaskParams fanTaskParams = {&fanDevice, fanQueue};
+  QueueHandle_t queues[] = {fanQueue};
+  publishQueue = xQueueCreate(20, sizeof(PublishData));
+  if (publishQueue == NULL) {
+    Serial.println("Failed to create publish queue");
+  }
+
   xTaskCreate(deviceTask, "FanTask", 2048, &fanTaskParams, 1, NULL);
   xTaskCreate(TimerTask, "TimerTask", 2048, queues, 1, NULL);
   xTaskCreate(sensorTask, "SensorTask", 2048, NULL, 1, NULL);

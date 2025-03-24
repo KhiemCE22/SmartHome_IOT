@@ -1,7 +1,7 @@
 #include "device.h"
 
 void Fan::addSchedule(int hour, int minute, bool status, int speed) {
-    if (scheduleCounter < SCHEDULE_SIZE) {
+    if (scheduleCounter < scheduleSize) {
         schedule[scheduleCounter].hour = hour;
         schedule[scheduleCounter].minute = minute;
         schedule[scheduleCounter].status = status;
@@ -32,7 +32,7 @@ void Fan::handleEvent(Event event, void* data) {
                     status = *(bool*)data;
                     control();
                 } else if (event == EVENT_SET_PARAMETER) {
-                    speed = *(int*)data;
+                    speed = *(float*)data;
                     if (status) control();
                 }
                 break;
@@ -50,14 +50,14 @@ void Fan::handleEvent(Event event, void* data) {
                         }
                     }
                 } else if (event == EVENT_SET_PARAMETER) {
-                    speed = *(int*)data;
+                    speed = *(float*)data;
                     if (status) control();
                 }
                 break;
             case AUTO:
                 if (event == EVENT_THRESSHOLE_CHANGE) 
-                    thresshold = *(int*)data;
-                status = (temperatureValue < thresshold);
+                    thresshold = *(float*)data;
+                status = (*temperatureValue < thresshold);
                 speed = status ? 100 : 0; //default speed
                 control();
                 break;

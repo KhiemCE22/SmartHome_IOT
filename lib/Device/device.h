@@ -1,6 +1,8 @@
 #ifndef __DEVICE_H__
 #define __DEVICE_H__
-#include "global.h"
+#include <freertos/FreeRTOS.h>
+#include <freertos/semphr.h>
+#include <Arduino.h>
 enum Mode
 {
     MANUAL = 0,
@@ -21,7 +23,8 @@ struct EventData {
     union {
         Mode modeValue;     // Dùng cho EVENT_SET_MODE
         bool boolValue;     // Dùng cho EVENT_MANUAL_CONTROL
-        int intValue;       // Dùng cho EVENT_SET_PARAMETER, EVENT_SENSOR_CHANGE
+        float floatValue;       // Dùng cho EVENT_SET_PARAMETER, EVENT_THRESSHOLE_CHANGE
+        int intValue;        // Trường hợp dự phòng
         int time[2];        // Dùng cho EVENT_TIMER (giờ, phút)
     } data;
 };
@@ -43,10 +46,12 @@ class Device {
     protected:
         bool status;
         Mode currentMode;
+        int scheduleSize;
+        int scheduleCounter;
         // bool manualOverride;
         SemaphoreHandle_t mutex;
     public:
-        Device() : status(false), currentMode(MANUAL) {
+        Device(int scheduleSize) : status(false), currentMode(MANUAL), scheduleCounter(0), scheduleSize(scheduleSize) {
             mutex = xSemaphoreCreateMutex();
         }
         virtual ~Device() {}
@@ -84,12 +89,17 @@ class Device {
 class Fan : public Device {
     private:
         uint8_t FanPin = 27;
-        int thresshold;
-        int speed;
-        FanScheduleEntry schedule[2];
-        int scheduleCounter;
+        float thresshold;
+        float speed;
+        float* temperatureValue;
+        FanScheduleEntry* schedule;
     public:
-        Fan() : Device(), thresshold(50), speed(100), scheduleCounter(0) {}
+        Fan(float* temperatureValue, int scheduleSize) : Device(scheduleSize), thresshold(50), speed(100), temperatureValue(temperatureValue) {
+            schedule = new FanScheduleEntry[scheduleSize];
+        }
+        ~Fan() {
+            delete[] schedule; //free memory
+        }
         void addSchedule(int hour, int minute, bool status, int brightness);
         void deleteSchedule(int index);
         void handleEvent(Event event, void* data) override;

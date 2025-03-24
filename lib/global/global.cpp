@@ -8,12 +8,19 @@ PubSubClient client(espClient);
 QueueHandle_t doorQueue;
 QueueHandle_t fanQueue;
 QueueHandle_t lightQueue;
+QueueHandle_t publishQueue;
+
+float temperatureValue;
+float humidityValue;
+
+Fan fanDevice(&temperatureValue,SCHEDULE_SIZE);
+
+
 
 struct tm currentTime;
 
 DHT20 DHT(&Wire);
-float temperatureValue;
-float humidityValue;
+
 void pinSetup(){
     pinMode(BUZZER_PIN, OUTPUT);
     pinMode(LIGHT_PIN, OUTPUT);

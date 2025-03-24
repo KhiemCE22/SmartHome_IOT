@@ -4,8 +4,11 @@
 #include "global.h"
 #include "device.h"
 
+struct PublishData {
+    char topic[64];    // Chuỗi chứa topic
+    char message[32];  // Chuỗi chứa message
+};
 
-extern Fan fanDevice;
 void connectWifi();
 void setupMQTT();
 void reconnect();

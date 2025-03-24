@@ -12,6 +12,7 @@
 #include <time.h>
 #include "credentials.h"
 #include "device.h"
+#include "tasks.h"
 
 #define SCHEDULE_SIZE 2
 // GPIO configuration
@@ -26,6 +27,10 @@
 
 #define DEVICECOUNT 1
 // configuration NTP
+
+
+struct TaskParams; // forward declaration
+
 extern const char* ntpServer;
 extern const long  gmtOffset_sec;  // GMT+7 cho Việt Nam
 extern const int   daylightOffset_sec;
@@ -39,12 +44,19 @@ extern QueueHandle_t doorQueue;
 extern QueueHandle_t fanQueue;
 extern QueueHandle_t lightQueue;
 
+extern QueueHandle_t publishQueue;
 
+
+extern Fan fanDevice;
 // Light lightDevice;
 
 extern float temperatureValue;
 extern float humidityValue;
 
+
+// extern QueueHandle_t queues[];
+  
+// extern TaskParams fanTaskParams;
 
 extern DHT20 DHT;
 void pinSetup(void);
