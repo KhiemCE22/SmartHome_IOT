@@ -3,7 +3,8 @@
 #include "credentials.h"
 #include "global.h"
 #include "device.h"
-
+#include <freertos/FreeRTOS.h>
+#include <freertos/semphr.h>
 struct PublishData {
     char topic[64];    // Chuỗi chứa topic
     char message[32];  // Chuỗi chứa message

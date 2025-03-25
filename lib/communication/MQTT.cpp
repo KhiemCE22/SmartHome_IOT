@@ -63,28 +63,60 @@ void mqttCallback(char* topic, byte* payload, unsigned int length){
             EventData eventData;
             eventData.event = EVENT_SET_MODE;
             eventData.data.modeValue = mode;
-            xQueueSend(fanQueue, &eventData, 0);
+            Serial.printf("Set mode for device FAN\n" );
+            Serial.printf("Mode: %d\n", mode);
+            if (xSemaphoreTake(queueMappings[FANQUEUE].mutex, portMAX_DELAY)) {
+                if (xQueueSend(queueMappings[FANQUEUE].queue, &eventData, 0) != pdTRUE) {
+                    Serial.printf("Failed to send data to queue for device FAN\n" );
+                }
+                xSemaphoreGive(queueMappings[FANQUEUE].mutex);
+            }
         }
         else if (action == "manual_control"){
             bool status = doc["status"];
             EventData eventData;
             eventData.event = EVENT_MANUAL_CONTROL;
             eventData.data.boolValue = status;
-            xQueueSend(fanQueue, &eventData, 0);
+            Serial.printf("Manual control for device FAN\n" );
+            Serial.printf("Status: %d\n", status);
+            Serial.println("Attempting to take mutex...");
+            if (xSemaphoreTake(queueMappings[FANQUEUE].mutex, portMAX_DELAY)) {
+                Serial.println("Mutex taken successfully");
+                // Thực hiện các thao tác với hàng đợi
+                if (xQueueSend(queueMappings[FANQUEUE].queue, &eventData, 0) != pdTRUE) {
+                    Serial.println("Failed to send data to queue for FAN");
+                } else {
+                    Serial.println("Send data to queue for FAN");
+                }
+                xSemaphoreGive(queueMappings[FANQUEUE].mutex);
+                Serial.println("Mutex released");
+            } else {
+                Serial.println("Failed to take mutex");
+            }
         }
         else if (action == "set_parameter"){
             float speed = doc["speed"];
             EventData eventData;
             eventData.event = EVENT_SET_PARAMETER;
             eventData.data.floatValue = speed;
-            xQueueSend(fanQueue, &eventData, 0);
+            if (xSemaphoreTake(queueMappings[FANQUEUE].mutex, portMAX_DELAY)) {
+                if (xQueueSend(queueMappings[FANQUEUE].queue, &eventData, 0) != pdTRUE) {
+                    Serial.printf("Failed to send data to queue for device FAN\n" );
+                }
+                xSemaphoreGive(queueMappings[FANQUEUE].mutex);
+            }
         }
         else if (action == "set_threshold"){
             float thresshold = doc["thresshold"];
             EventData eventData;
             eventData.event = EVENT_THRESSHOLE_CHANGE;
             eventData.data.floatValue = thresshold;
-            xQueueSend(fanQueue, &eventData, 0);
+            if (xSemaphoreTake(queueMappings[FANQUEUE].mutex, portMAX_DELAY)) {
+                if (xQueueSend(queueMappings[FANQUEUE].queue, &eventData, 0) != pdTRUE) {
+                    Serial.printf("Failed to send data to queue for device FAN\n" );
+                }
+                xSemaphoreGive(queueMappings[FANQUEUE].mutex);
+            }
         }
         else if (action == "add_schedule"){
             int hour = doc["hour"];

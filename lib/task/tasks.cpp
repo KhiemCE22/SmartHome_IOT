@@ -1,39 +1,55 @@
 #include "tasks.h"
 
+SemaphoreHandle_t publishQueueMutex = xSemaphoreCreateMutex();
+
+
 void mqttTask(void* param) {
     static unsigned long lastConnectAttempt = 0;
     const unsigned long connectInterval = 5000; // Thử kết nối lại sau 5 giây
-    
+    static unsigned long lastPublishTime = 0;   // Thời gian lần publish cuối cùng
+    const unsigned long publishInterval = 2000; // Publish mỗi 2 giây
+
     while (true) {
         // Kiểm tra và kết nối lại WiFi nếu cần
         if (WiFi.status() != WL_CONNECTED) {
             connectWifi();  // Chỉ kết nối WiFi
         } else if (!client.connected() && (millis() - lastConnectAttempt > connectInterval)) {
             setupMQTT();  // Chỉ kết nối MQTT nếu WiFi đã sẵn sàng
+            lastConnectAttempt = millis();
         }
-        
+
         // Xử lý khi đã kết nối MQTT
         if (client.connected()) {
             client.loop(); // Duy trì kết nối MQTT
-            
-            PublishData data;
-            // Nhận dữ liệu từ queue và publish
-            if (xQueueReceive(publishQueue, &data, 0) == pdTRUE) {
-                if (!client.publish(data.topic, data.message)){
-                    Serial.println("Failed to publish message");
-                    Serial.println(data.topic);
-                    Serial.println(data.message);   
+
+            // Kiểm tra nếu đã đến thời gian publish
+            if (millis() - lastPublishTime >= publishInterval) {
+                PublishData data;
+
+                // Nhận dữ liệu từ queue và publish
+                if (xSemaphoreTake(publishQueueMutex, portMAX_DELAY)) {
+                    if (xQueueReceive(publishQueue, &data, 0) == pdTRUE) {
+                        if (!client.publish(data.topic, data.message)) {
+                            Serial.println("Failed to publish message");
+                        } else {
+                            Serial.printf("Published: %s -> %s\n", data.topic, data.message);
+                        }
+                    }
+                    xSemaphoreGive(publishQueueMutex);
                 }
+
+                // Cập nhật thời gian publish cuối cùng
+                lastPublishTime = millis();
             }
-            else
-                Serial.println("No data to publish");
         }
-        
-        vTaskDelay(pdMS_TO_TICKS(10000)); // Delay ngắn để client.loop() chạy thường xuyên
+
+        // Delay ngắn để client.loop() chạy thường xuyên
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
+
 void TimerTask(void* param) {
-    QueueHandle_t* queues = (QueueHandle_t*)param;
+    QueueMapping* mappings = (QueueMapping*)param;
     while (true) {
         EventData eventData;
         eventData.event = EVENT_TIMER;
@@ -41,10 +57,16 @@ void TimerTask(void* param) {
         eventData.data.time[1] = currentTime.tm_min;
 
         for (int i = 0; i < DEVICECOUNT; i++) {
-            if (queues[i] == NULL) {
-                Serial.printf("Failed to create queue[%d]\n", i);
+            if (mappings[i].queue == NULL) {
+                Serial.printf("Queue for device[%d] is NULL!\n", i);
+                continue;
             }
-            xQueueSend(queues[i], &eventData, 0);
+            if (xSemaphoreTake(mappings[i].mutex, portMAX_DELAY)) {
+                if (xQueueSend(mappings[i].queue, &eventData, 0) != pdTRUE) {
+                    Serial.printf("Failed to send data to queue for device[%d]\n", i);
+                }
+                xSemaphoreGive(mappings[i].mutex);
+            }
         }
         vTaskDelay(pdMS_TO_TICKS(60000)); // every minute
     }
@@ -61,15 +83,23 @@ void sensorTask(void* param) {
         // Gửi dữ liệu nhiệt độ
         strcpy(data.topic, TOPIC_PUB_TEMP);           // TOPIC_PUB_TEMP là hằng số đã khai báo
         strcpy(data.message, String(temperatureValue).c_str());
-        if (xQueueSend(publishQueue, &data, 0) != pdTRUE) {
-            Serial.println("Failed to send data to publish queue");
+        if (xSemaphoreTake(publishQueueMutex, portMAX_DELAY)) {
+            if (xQueueSend(publishQueue, &data, 0) != pdTRUE) {
+                Serial.println("Failed to send data to publish queue");
+                Serial.printf("Items in publishQueue: %d\n", uxQueueMessagesWaiting(publishQueue));
+            }
+            xSemaphoreGive(publishQueueMutex);
+            Serial.println("Temperature: " + String(temperatureValue));
         }
-        Serial.println("Temperature: " + String(temperatureValue));
         // Gửi dữ liệu độ ẩm
         strcpy(data.topic, TOPIC_PUB_HUMIDITY);       // TOPIC_PUB_HUMIDITY là hằng số đã khai báo
         strcpy(data.message, String(humidityValue).c_str());
-        if (xQueueSend(publishQueue, &data, 0) != pdTRUE) {
-            Serial.println("Failed to send data to publish queue");
+        if (xSemaphoreTake(publishQueueMutex, portMAX_DELAY)) {
+            if (xQueueSend(publishQueue, &data, 0) != pdTRUE) {
+                Serial.println("Failed to send data to publish queue");
+                Serial.printf("Items in publishQueue: %d\n", uxQueueMessagesWaiting(publishQueue));
+            }
+            xSemaphoreGive(publishQueueMutex);
         }
         
         vTaskDelay(pdMS_TO_TICKS(5000)); // Chờ 5 giây trước khi đọc lại
@@ -77,27 +107,54 @@ void sensorTask(void* param) {
 }
 
 void deviceTask(void* param) {
-    Device* device = (Device*)((void**)param)[0];
-    QueueHandle_t queue = (QueueHandle_t)((void**)param)[1];
+    QueueMapping* mapping = (QueueMapping*)param;
+    Device* device = mapping->device;
+    QueueHandle_t queue = mapping->queue;
+    SemaphoreHandle_t mutex = mapping->mutex;
     EventData eventData;
+    Serial.println("Device task started");
     while (true) {
         if (queue == NULL) {
-            Serial.println("Failed to create queue");
+            Serial.println("Queue is NULL!");
+            vTaskDelete(NULL); // Kết thúc task nếu hàng đợi không hợp lệ
         }
-        if (xQueueReceive(queue, &eventData, portMAX_DELAY) == pdTRUE) {
-            void* dataPtr;
-            switch (eventData.event) {
-                case EVENT_SET_MODE: dataPtr = &eventData.data.modeValue; break;
-                case EVENT_MANUAL_CONTROL: dataPtr = &eventData.data.boolValue; break;
-                case EVENT_SET_PARAMETER: dataPtr = &eventData.data.floatValue; break;
-                case EVENT_TIMER: dataPtr = eventData.data.time; break;
-                case EVENT_THRESSHOLE_CHANGE: dataPtr = &eventData.data.floatValue; break;
-                default: continue;
+
+        if (xSemaphoreTake(mutex, portMAX_DELAY)) {
+            Serial.println("Mutex taken successfully");
+            if (xQueueReceive(queue, &eventData, portMAX_DELAY) == pdTRUE) {
+                Serial.println("Received event");
+                void* dataPtr;
+                switch (eventData.event) {
+                    case EVENT_SET_MODE: 
+                        Serial.println("Received mode change event");
+                        dataPtr = &eventData.data.modeValue; 
+                        break;
+                    case EVENT_MANUAL_CONTROL: 
+                        Serial.println("Received manual control event");
+                        dataPtr = &eventData.data.boolValue; 
+                        break;
+                    case EVENT_SET_PARAMETER: 
+                        Serial.println("Received set parameter event");
+                        dataPtr = &eventData.data.floatValue; 
+                        break;
+                    case EVENT_TIMER: 
+                        Serial.println("Received timer event");
+                        dataPtr = eventData.data.time; 
+                        break;
+                    case EVENT_THRESSHOLE_CHANGE: 
+                        Serial.println("Received thresshold change event");
+                        dataPtr = &eventData.data.floatValue; 
+                        break;
+                    default: continue;
+                }
+                device->handleEvent(eventData.event, dataPtr);
             }
-            device->handleEvent(eventData.event, dataPtr);
+            else {
+                Serial.println("No event received");
+            }
+            xSemaphoreGive(mutex);
+            Serial.println("Mutex released");
         }
-        else {
-            Serial.println("Failed to receive data from queue");
-        }
+        vTaskDelay(pdMS_TO_TICKS(100)); // Delay ngắn để giảm xung đột
     }
 }

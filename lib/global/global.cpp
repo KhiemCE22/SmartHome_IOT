@@ -14,8 +14,7 @@ float temperatureValue;
 float humidityValue;
 
 Fan fanDevice(&temperatureValue,SCHEDULE_SIZE);
-
-
+QueueMapping  queueMappings[DEVICECOUNT];
 
 struct tm currentTime;
 
@@ -24,7 +23,7 @@ DHT20 DHT(&Wire);
 void pinSetup(){
     pinMode(BUZZER_PIN, OUTPUT);
     pinMode(LIGHT_PIN, OUTPUT);
-    pinMode(fan, OUTPUT);
+    pinMode(FAN_PIN, OUTPUT);
     pinMode(PIN_NEO_PIXEL, OUTPUT);
     Wire.begin(SDAPIN, SCLPIN); 
 }

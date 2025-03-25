@@ -18,7 +18,7 @@
 // GPIO configuration
 #define BUZZER_PIN 25     //  BUZZER_PIN
 #define LIGHT_PIN  33 
-#define fan 27 
+#define FAN_PIN 27 
 //#define door 19
 #define PIN_NEO_PIXEL 26
 #define NUM_PIXELS 4
@@ -26,11 +26,16 @@
 #define SCLPIN 22
 
 #define DEVICECOUNT 1
+#define FANQUEUE 0
 // configuration NTP
 
 
 struct TaskParams; // forward declaration
-
+struct QueueMapping {
+    Device* device;
+    QueueHandle_t queue;
+    SemaphoreHandle_t mutex;
+};
 extern const char* ntpServer;
 extern const long  gmtOffset_sec;  // GMT+7 cho Việt Nam
 extern const int   daylightOffset_sec;
@@ -53,10 +58,11 @@ extern Fan fanDevice;
 extern float temperatureValue;
 extern float humidityValue;
 
-
+extern QueueMapping  queueMappings[DEVICECOUNT];
 // extern QueueHandle_t queues[];
   
 // extern TaskParams fanTaskParams;
+
 
 extern DHT20 DHT;
 void pinSetup(void);
