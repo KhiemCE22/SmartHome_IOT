@@ -8,6 +8,7 @@ void Fan::addSchedule(int hour, int minute, bool status, int speed) {
         schedule[scheduleCounter].speed = speed;
         scheduleCounter++;
     }
+    Serial.printf("Schedule added: %d:%d, status: %d, speed: %d\n", hour, minute, status, speed);
 }
 void Fan::deleteSchedule(int index) {
     if (index < scheduleCounter) {
@@ -37,10 +38,12 @@ void Fan::handleEvent(Event event, void* data) {
                 }
                 break;
             case SCHEDULE:
+                Serial.println("Schedule mode");
                 if (event == EVENT_TIMER) {
                     int* timeData = (int*)data;
                     int currentHour = timeData[0];
                     int currentMinute = timeData[1];
+                    Serial.printf("Current time: %d:%d\n", currentHour, currentMinute);
                     for (int i = 0; i < scheduleCounter; i++) {
                         if (schedule[i].hour == currentHour && schedule[i].minute == currentMinute) {
                             Serial.println("Schedule matched");

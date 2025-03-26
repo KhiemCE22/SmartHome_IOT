@@ -53,6 +53,7 @@ void TimerTask(void* param) {
     while (true) {
         EventData eventData;
         eventData.event = EVENT_TIMER;
+        getLocalTime(&currentTime);
         eventData.data.time[0] = currentTime.tm_hour;
         eventData.data.time[1] = currentTime.tm_min;
         Serial.printf("Current time: %d:%d\n", eventData.data.time[0], eventData.data.time[1]);
