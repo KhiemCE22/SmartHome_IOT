@@ -55,23 +55,19 @@ void TimerTask(void* param) {
         eventData.event = EVENT_TIMER;
         eventData.data.time[0] = currentTime.tm_hour;
         eventData.data.time[1] = currentTime.tm_min;
-
+        Serial.printf("Current time: %d:%d\n", eventData.data.time[0], eventData.data.time[1]);
         for (int i = 0; i < DEVICECOUNT; i++) {
             if (mappings[i].queue == NULL) {
                 Serial.printf("Queue for device[%d] is NULL!\n", i);
                 continue;
             }
-            if (xSemaphoreTake(mappings[i].mutex, portMAX_DELAY)) {
-                if (xQueueSend(mappings[i].queue, &eventData, 0) != pdTRUE) {
-                    Serial.printf("Failed to send data to queue for device[%d]\n", i);
-                }
-                xSemaphoreGive(mappings[i].mutex);
+            if (xQueueSend(mappings[i].queue, &eventData, 0) != pdTRUE) {
+                Serial.printf("Failed to send data to queue for device[%d]\n", i);
             }
         }
         vTaskDelay(pdMS_TO_TICKS(60000)); // every minute
     }
 }
-
 // note : check race condition
 void sensorTask(void* param) {
     Serial.println("Sensor task started");
@@ -110,51 +106,41 @@ void deviceTask(void* param) {
     QueueMapping* mapping = (QueueMapping*)param;
     Device* device = mapping->device;
     QueueHandle_t queue = mapping->queue;
-    SemaphoreHandle_t mutex = mapping->mutex;
     EventData eventData;
     Serial.println("Device task started");
     while (true) {
         if (queue == NULL) {
             Serial.println("Queue is NULL!");
-            vTaskDelete(NULL); // Kết thúc task nếu hàng đợi không hợp lệ
+            vTaskDelete(NULL);
         }
-
-        if (xSemaphoreTake(mutex, portMAX_DELAY)) {
-            Serial.println("Mutex taken successfully");
-            if (xQueueReceive(queue, &eventData, portMAX_DELAY) == pdTRUE) {
-                Serial.println("Received event");
-                void* dataPtr;
-                switch (eventData.event) {
-                    case EVENT_SET_MODE: 
-                        Serial.println("Received mode change event");
-                        dataPtr = &eventData.data.modeValue; 
-                        break;
-                    case EVENT_MANUAL_CONTROL: 
-                        Serial.println("Received manual control event");
-                        dataPtr = &eventData.data.boolValue; 
-                        break;
-                    case EVENT_SET_PARAMETER: 
-                        Serial.println("Received set parameter event");
-                        dataPtr = &eventData.data.floatValue; 
-                        break;
-                    case EVENT_TIMER: 
-                        Serial.println("Received timer event");
-                        dataPtr = eventData.data.time; 
-                        break;
-                    case EVENT_THRESSHOLE_CHANGE: 
-                        Serial.println("Received thresshold change event");
-                        dataPtr = &eventData.data.floatValue; 
-                        break;
-                    default: continue;
-                }
-                device->handleEvent(eventData.event, dataPtr);
+        if (xQueueReceive(queue, &eventData, portMAX_DELAY) == pdTRUE) {
+            Serial.println("Received event");
+            void* dataPtr;
+            switch (eventData.event) {
+                case EVENT_SET_MODE: 
+                    Serial.println("Received mode change event");
+                    dataPtr = &eventData.data.modeValue; 
+                    break;
+                case EVENT_MANUAL_CONTROL: 
+                    Serial.println("Received manual control event");
+                    dataPtr = &eventData.data.boolValue; 
+                    break;
+                case EVENT_SET_PARAMETER: 
+                    Serial.println("Received set parameter event");
+                    dataPtr = &eventData.data.floatValue; 
+                    break;
+                case EVENT_TIMER: 
+                    Serial.println("Received timer event");
+                    dataPtr = eventData.data.time; 
+                    break;
+                case EVENT_THRESSHOLE_CHANGE: 
+                    Serial.println("Received thresshold change event");
+                    dataPtr = &eventData.data.floatValue; 
+                    break;
+                default: continue;
             }
-            else {
-                Serial.println("No event received");
-            }
-            xSemaphoreGive(mutex);
-            Serial.println("Mutex released");
+            device->handleEvent(eventData.event, dataPtr);
         }
-        vTaskDelay(pdMS_TO_TICKS(100)); // Delay ngắn để giảm xung đột
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
 }

@@ -105,7 +105,10 @@ class Fan : public Device {
         void handleEvent(Event event, void* data) override;
     protected:
         void control() override{
+            Serial.println("Control fan");
             if (status) {
+                Serial.println("Fan status: " + String(status));
+                Serial.println(speed);
                 analogWrite(FanPin, map(speed, 0, 100, 0, 255));
             } else {
                 analogWrite(FanPin, 0);

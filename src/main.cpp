@@ -14,7 +14,7 @@ void setup() {
   }
   setupMQTT();
   pinSetup();
-
+  Serial.println("current time: " + String(currentTime.tm_hour) + ":" + String(currentTime.tm_min));
   // doorQueue = xQueueCreate(10, sizeof(EventData));
   // lightQueue = xQueueCreate(10, sizeof(EventData));
   fanQueue = xQueueCreate(10, sizeof(EventData));

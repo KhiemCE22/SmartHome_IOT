@@ -43,6 +43,7 @@ void Fan::handleEvent(Event event, void* data) {
                     int currentMinute = timeData[1];
                     for (int i = 0; i < scheduleCounter; i++) {
                         if (schedule[i].hour == currentHour && schedule[i].minute == currentMinute) {
+                            Serial.println("Schedule matched");
                             status = schedule[i].status;
                             if (status) 
                                 speed = schedule[i].speed;
