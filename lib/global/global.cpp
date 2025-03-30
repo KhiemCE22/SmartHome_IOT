@@ -12,6 +12,9 @@ QueueHandle_t publishQueue;
 
 float temperatureValue;
 float humidityValue;
+float distanceValue;
+// float gasValue;
+float lightValue;
 
 Fan fanDevice(&temperatureValue,SCHEDULE_SIZE);
 QueueMapping  queueMappings[DEVICECOUNT];
@@ -21,10 +24,12 @@ struct tm currentTime;
 DHT20 DHT(&Wire);
 
 void pinSetup(){
+    pinMode(ULTRASONIC_ECHO, INPUT);
+    pinMode(ULTRASONIC_TRIG, OUTPUT);
     pinMode(BUZZER_PIN, OUTPUT);
-    pinMode(LIGHT_PIN, OUTPUT);
+    pinMode(LIGHT_SENSOR_PIN, OUTPUT);
     pinMode(FAN_PIN, OUTPUT);
-    pinMode(PIN_NEO_PIXEL, OUTPUT);
+    pinMode(LED_PIN, OUTPUT);
     Wire.begin(SDAPIN, SCLPIN); 
 }
 

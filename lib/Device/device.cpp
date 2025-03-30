@@ -1,12 +1,19 @@
 #include "device.h"
 
 void Fan::addSchedule(int hour, int minute, bool status, int speed) {
+    if (hour < 0 || hour > 23 || minute < 0 || minute > 59 || speed < 0 || speed > 100) {
+        Serial.println("Invalid schedule parameters");
+        return;
+    }
     if (scheduleCounter < scheduleSize) {
         schedule[scheduleCounter].hour = hour;
         schedule[scheduleCounter].minute = minute;
         schedule[scheduleCounter].status = status;
         schedule[scheduleCounter].speed = speed;
         scheduleCounter++;
+    }
+    else {
+        Serial.println("Schedule list is full");
     }
     Serial.printf("Schedule added: %d:%d, status: %d, speed: %d\n", hour, minute, status, speed);
 }
@@ -56,12 +63,22 @@ void Fan::handleEvent(Event event, void* data) {
                 } else if (event == EVENT_SET_PARAMETER) {
                     speed = *(float*)data;
                     if (status) control();
+                } else if (event == EVENT_MANUAL_CONTROL) {
+                    status = *(bool*)data;
+                    if (status) control();
                 }
                 break;
             case AUTO:
                 if (event == EVENT_THRESSHOLE_CHANGE) 
                     thresshold = *(float*)data;
-                status = (*temperatureValue < thresshold);
+                else if (event == EVENT_MANUAL_CONTROL) {
+                    status = *(bool*)data;
+                    if (status) control();
+                } else if (event == EVENT_SET_PARAMETER) {
+                    speed = *(float*)data;
+                    if (status) control();
+                }
+                status = (*temperatureValue > thresshold);
                 speed = status ? 100 : 0; //default speed
                 control();
                 break;

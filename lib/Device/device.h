@@ -88,7 +88,7 @@ class Device {
 
 class Fan : public Device {
     private:
-        uint8_t FanPin = 27;
+        uint8_t FanPin = 19; // GPIO P14
         float thresshold;
         float speed;
         float* temperatureValue;

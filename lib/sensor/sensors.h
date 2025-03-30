@@ -4,5 +4,6 @@
 
 void readTemperature();
 void readHumidity();
-
+void readDistance();
+void readLight();
 #endif
