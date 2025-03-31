@@ -35,6 +35,7 @@ void setup() {
 
   xTaskCreate(deviceTask, "FanTask", 2048, &queueMappings[0], 1, NULL);
   xTaskCreate(TimerTask, "TimerTask", 2048, queueMappings, 1, NULL);
+  xTaskCreate(AutoUpdateTask, "AutoUpdateTask", 2048, queueMappings, 1, NULL);
   xTaskCreate(sensorTask, "SensorTask", 2048, NULL, 1, NULL);
   xTaskCreate(mqttTask, "MQTTTask", 4096, NULL, 2, NULL);
 

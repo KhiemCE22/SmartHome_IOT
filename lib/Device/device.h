@@ -15,7 +15,8 @@ enum Event {
     EVENT_MANUAL_CONTROL,  // Điều khiển thủ công 
     EVENT_SET_PARAMETER,   // Cài đặt thông số (tốc độ, độ sáng)
     EVENT_TIMER,          // Kiểm tra thời gian  hiện tại với lịch trình
-    EVENT_THRESSHOLE_CHANGE   // Thay đổi giá trị threshold (chỉ dùng cho AUTO)
+    EVENT_THRESSHOLE_CHANGE,   // Thay đổi giá trị threshold (chỉ dùng cho AUTO)
+    EVENT_AUTO_UPDATE   // Cập nhật tự động (chỉ dùng cho AUTO)
 };
 
 struct EventData {
@@ -57,6 +58,9 @@ class Device {
         virtual ~Device() {}
         void setMode(Mode mode) {
             currentMode = mode;
+        }
+        Mode getMode() {
+            return currentMode;
         }
         virtual void handleEvent(Event event, void* data) = 0;
     protected:

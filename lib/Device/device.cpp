@@ -38,11 +38,11 @@ void Fan::handleEvent(Event event, void* data) {
             case MANUAL:
                 if (event == EVENT_MANUAL_CONTROL) {
                     status = *(bool*)data;
-                    control();
+                    
                 } else if (event == EVENT_SET_PARAMETER) {
                     speed = *(float*)data;
-                    if (status) control();
                 }
+                control();
                 break;
             case SCHEDULE:
                 Serial.println("Schedule mode");
@@ -62,24 +62,25 @@ void Fan::handleEvent(Event event, void* data) {
                     }
                 } else if (event == EVENT_SET_PARAMETER) {
                     speed = *(float*)data;
-                    if (status) control();
+                    control();
                 } else if (event == EVENT_MANUAL_CONTROL) {
                     status = *(bool*)data;
-                    if (status) control();
+                    control();
                 }
                 break;
             case AUTO:
-                if (event == EVENT_THRESSHOLE_CHANGE) 
+                if (event == EVENT_THRESSHOLE_CHANGE) {
                     thresshold = *(float*)data;
-                else if (event == EVENT_MANUAL_CONTROL) {
+                } else if (event == EVENT_MANUAL_CONTROL) {
                     status = *(bool*)data;
-                    if (status) control();
                 } else if (event == EVENT_SET_PARAMETER) {
                     speed = *(float*)data;
-                    if (status) control();
+                } else if (event == EVENT_AUTO_UPDATE) {
+                    status = (*temperatureValue > thresshold);
+                    Serial.printf("AUTO: Temperature: %f, Thresshold: %f\n", *temperatureValue, thresshold);
+                    // map speed from 0 to 100 based on temperature 
+                    speed = map(*temperatureValue, 0, 45, 0, 100);
                 }
-                status = (*temperatureValue > thresshold);
-                speed = status ? 100 : 0; //default speed
                 control();
                 break;
             default:

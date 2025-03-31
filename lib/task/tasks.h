@@ -15,5 +15,6 @@ struct TaskParams {
 void mqttTask(void *pvParameters);
 void sensorTask(void *pvParameters);
 void TimerTask(void *pvParameters); // for Schedule Mode
+void AutoUpdateTask(void *pvParameters); // for Auto Mode
 void deviceTask(void *pvParameters); 
 #endif

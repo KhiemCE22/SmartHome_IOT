@@ -90,10 +90,12 @@ void mqttCallback(char* topic, byte* payload, unsigned int length){
             }
         }
         else if (action == "set_threshold"){
-            float thresshold = doc["thresshold"];
+            float thresshold = doc["threshold"];
             EventData eventData;
             eventData.event = EVENT_THRESSHOLE_CHANGE;
             eventData.data.floatValue = thresshold;
+            Serial.printf("Set thresshold for device FAN\n" );
+            Serial.printf("Thresshold: %f\n", thresshold);
             if (xQueueSend(queueMappings[FANQUEUE].queue, &eventData, 0) != pdTRUE) {
                 Serial.printf("Failed to send data to queue for device FAN\n" );
             }

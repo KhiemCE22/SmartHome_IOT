@@ -69,6 +69,23 @@ void TimerTask(void* param) {
         vTaskDelay(pdMS_TO_TICKS(60000)); // every minute
     }
 }
+void AutoUpdateTask(void* param) {
+    QueueMapping* mappings = (QueueMapping*)param;
+    while (true) {
+        EventData eventData;
+        eventData.event = EVENT_AUTO_UPDATE;
+        for (int i = 0; i < DEVICECOUNT; i++) {
+            if (mappings[i].queue == NULL) {
+                Serial.printf("Queue for device[%d] is NULL!\n", i);
+                continue;
+            }
+            if (xQueueSend(mappings[i].queue, &eventData, 0) != pdTRUE) {
+                Serial.printf("Failed to send data to queue for device[%d]\n", i);
+            }
+        }
+        vTaskDelay(pdMS_TO_TICKS(1000)); // every second
+    }
+}
 // note : check race condition
 void sensorTask(void* param) {
     Serial.println("Sensor task started");
@@ -137,6 +154,10 @@ void deviceTask(void* param) {
                 case EVENT_THRESSHOLE_CHANGE: 
                     Serial.println("Received thresshold change event");
                     dataPtr = &eventData.data.floatValue; 
+                    break;
+                case EVENT_AUTO_UPDATE: 
+                    Serial.println("Received auto update event");
+                    dataPtr = NULL; // Không cần dữ liệu bổ sung cho sự kiện này
                     break;
                 default: continue;
             }
