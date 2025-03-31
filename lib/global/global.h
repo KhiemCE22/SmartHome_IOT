@@ -31,8 +31,9 @@
 #define SCLPIN 22
 
 
-#define DEVICECOUNT 1
+#define DEVICECOUNT 2
 #define FANQUEUE 0
+#define LEDQUEUE 1
 // configuration NTP
 
 
@@ -53,12 +54,13 @@ extern PubSubClient client;
 
 extern QueueHandle_t doorQueue;
 extern QueueHandle_t fanQueue;
-extern QueueHandle_t lightQueue;
+extern QueueHandle_t ledQueue;
 
 extern QueueHandle_t publishQueue;
 
 
 extern Fan fanDevice;
+extern LED ledDevice;
 // Light lightDevice;
 extern float distanceValue;
 // extern float gasValue;
@@ -66,6 +68,8 @@ extern float temperatureValue;
 extern float humidityValue;
 extern float lightValue;
 extern QueueMapping  queueMappings[DEVICECOUNT];
+
+
 // extern QueueHandle_t queues[];
   
 // extern TaskParams fanTaskParams;
@@ -73,5 +77,4 @@ extern QueueMapping  queueMappings[DEVICECOUNT];
 
 extern DHT20 DHT;
 void pinSetup(void);
-
 #endif

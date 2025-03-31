@@ -7,7 +7,7 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 QueueHandle_t doorQueue;
 QueueHandle_t fanQueue;
-QueueHandle_t lightQueue;
+QueueHandle_t ledQueue;
 QueueHandle_t publishQueue;
 
 float temperatureValue;
@@ -17,6 +17,8 @@ float distanceValue;
 float lightValue;
 
 Fan fanDevice(&temperatureValue,SCHEDULE_SIZE);
+LED ledDevice(&lightValue, SCHEDULE_SIZE); 
+
 QueueMapping  queueMappings[DEVICECOUNT];
 
 struct tm currentTime;
@@ -29,7 +31,7 @@ void pinSetup(){
     pinMode(BUZZER_PIN, OUTPUT);
     pinMode(LIGHT_SENSOR_PIN, OUTPUT);
     pinMode(FAN_PIN, OUTPUT);
-    pinMode(LED_PIN, OUTPUT);
+    //pinMode(LED_PIN, OUTPUT);
     Wire.begin(SDAPIN, SCLPIN); 
 }
 

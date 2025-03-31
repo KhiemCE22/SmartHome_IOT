@@ -16,11 +16,12 @@ void setup() {
   pinSetup();
   Serial.println("current time: " + String(currentTime.tm_hour) + ":" + String(currentTime.tm_min));
   // doorQueue = xQueueCreate(10, sizeof(EventData));
-  // lightQueue = xQueueCreate(10, sizeof(EventData));
+  ledQueue = xQueueCreate(10, sizeof(EventData));
   fanQueue = xQueueCreate(10, sizeof(EventData));
   TaskParams fanTaskParams = {&fanDevice, fanQueue};
-  QueueHandle_t queues[] = {fanQueue};
+  QueueHandle_t queues[] = {fanQueue, ledQueue};
   queueMappings[0] = {&fanDevice, fanQueue, xSemaphoreCreateMutex()};
+  queueMappings[1] = {&ledDevice, ledQueue, xSemaphoreCreateMutex()};
     // Kiểm tra xem hàng đợi và mutex có được khởi tạo thành công không
   for (int i = 0; i < DEVICECOUNT; i++) {
       if (queueMappings[i].queue == NULL || queueMappings[i].mutex == NULL) {
@@ -33,7 +34,8 @@ void setup() {
     Serial.println("Failed to create publish queue");
   }
 
-  xTaskCreate(deviceTask, "FanTask", 2048, &queueMappings[0], 1, NULL);
+  xTaskCreate(deviceTask, "FanTask", 2048, &queueMappings[FANQUEUE], 1, NULL);
+  xTaskCreate(deviceTask, "LEDTask", 2048, &queueMappings[LEDQUEUE], 1, NULL);
   xTaskCreate(TimerTask, "TimerTask", 2048, queueMappings, 1, NULL);
   xTaskCreate(AutoUpdateTask, "AutoUpdateTask", 2048, queueMappings, 1, NULL);
   xTaskCreate(sensorTask, "SensorTask", 2048, NULL, 1, NULL);

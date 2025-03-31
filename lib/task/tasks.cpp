@@ -92,7 +92,8 @@ void sensorTask(void* param) {
     while (true) {
         readTemperature();  // Đọc nhiệt độ
         readHumidity();     // Đọc độ ẩm
-        
+        readLight();       // Đọc ánh sáng
+
         PublishData data;
         // Gửi dữ liệu nhiệt độ
         strcpy(data.topic, TOPIC_PUB_TEMP);           // TOPIC_PUB_TEMP là hằng số đã khai báo
@@ -115,7 +116,17 @@ void sensorTask(void* param) {
             }
             xSemaphoreGive(publishQueueMutex);
         }
-        
+        // Gửi dữ liệu ánh sáng
+        strcpy(data.topic, TOPIC_PUB_LIGHT);          // TOPIC_PUB_LIGHT là hằng số đã khai báo
+        strcpy(data.message, String(lightValue).c_str());
+        if (xSemaphoreTake(publishQueueMutex, portMAX_DELAY)) {
+            if (xQueueSend(publishQueue, &data, 0) != pdTRUE) {
+                Serial.println("Failed to send data to publish queue");
+                Serial.printf("Items in publishQueue: %d\n", uxQueueMessagesWaiting(publishQueue));
+            }
+            xSemaphoreGive(publishQueueMutex);
+            Serial.println("Light: " + String(lightValue));
+        }
         vTaskDelay(pdMS_TO_TICKS(5000)); // Chờ 5 giây trước khi đọc lại
     }
 }
@@ -151,7 +162,7 @@ void deviceTask(void* param) {
                     Serial.println("Received timer event");
                     dataPtr = eventData.data.time; 
                     break;
-                case EVENT_THRESSHOLE_CHANGE: 
+                case EVENT_THRESHOLE_CHANGE: 
                     Serial.println("Received thresshold change event");
                     dataPtr = &eventData.data.floatValue; 
                     break;
