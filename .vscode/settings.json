@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "*.embeddedhtml": "html",
-        "*.tcc": "cpp",
-        "functional": "cpp",
-        "tuple": "cpp"
-    }
-}
