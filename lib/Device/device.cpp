@@ -130,7 +130,7 @@ void LED::handleEvent(Event event, void* data){
                 if (event == EVENT_MANUAL_CONTROL) {
                     status = *(bool*)data;
                 } else if (event == EVENT_SET_PARAMETER) {
-                    brightness = *(int*)data;
+                    brightness = *(float*)data;
                 }
                 control();
                 break;
@@ -151,7 +151,7 @@ void LED::handleEvent(Event event, void* data){
                         }
                     }
                 } else if (event == EVENT_SET_PARAMETER) {
-                    brightness = *(int*)data;
+                    brightness = *(float*)data;
                     control();
                 } else if (event == EVENT_MANUAL_CONTROL) {
                     status = *(bool*)data;
@@ -164,7 +164,7 @@ void LED::handleEvent(Event event, void* data){
                 } else if (event == EVENT_MANUAL_CONTROL) {
                     status = *(bool*)data;
                 } else if (event == EVENT_SET_PARAMETER) {
-                    brightness = *(int*)data;
+                    brightness = *(float*)data;
                 } else if (event == EVENT_AUTO_UPDATE) {
 
                     // lightValue: 0-100
@@ -175,6 +175,7 @@ void LED::handleEvent(Event event, void* data){
                     Serial.printf("AUTO: Light: %f, Thresshold: %f\n", *lightValue, threshold);
                     // map brightness from 0 to 100 based on lightValue
                     brightness = map(*lightValue, 0, threshold, 100, 0);
+                    brightness = constrain(brightness, 0, 100);
                 }
                 control();
                 break;

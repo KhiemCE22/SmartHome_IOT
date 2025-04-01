@@ -28,7 +28,8 @@ void mqttTask(void* param) {
 
                 // Nhận dữ liệu từ queue và publish
                 if (xSemaphoreTake(publishQueueMutex, portMAX_DELAY)) {
-                    if (xQueueReceive(publishQueue, &data, 0) == pdTRUE) {
+                    // Publish toàn bộ dữ liệu trong queue
+                    while (xQueueReceive(publishQueue, &data, 0) == pdTRUE) {
                         if (!client.publish(data.topic, data.message)) {
                             Serial.println("Failed to publish message");
                         } else {

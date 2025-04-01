@@ -1,430 +1,355 @@
-Published: khi3m/feeds/sensors.temperature -> 31.73
-Published: khi3m/feeds/sensors.humidity -> 64.60
-Temperature: 31.72
-Published: khi3m/feeds/sensors.temperature -> 31.72
-Published: khi3m/feeds/sensors.humidity -> 64.61
-Temperature: 31.71
-Published: khi3m/feeds/sensors.temperature -> 31.71
-Published: khi3m/feeds/sensors.humidity -> 64.62
-Temperature: 31.73
-Published: khi3m/feeds/sensors.temperature -> 31.73
-Published: khi3m/feeds/sensors.humidity -> 64.64
-Temperature: 31.74
-Published: khi3m/feeds/sensors.temperature -> 31.74
-Published: khi3m/feeds/sensors.humidity -> 64.63
-Temperature: 31.72
-Published: khi3m/feeds/sensors.temperature -> 31.72
-Published: khi3m/feeds/sensors.humidity -> 64.61
-Temperature: 31.73
-Published: khi3m/feeds/sensors.temperature -> 31.73
-Published: khi3m/feeds/sensors.humidity -> 64.67
-Temperature: 31.73
-Published: khi3m/feeds/sensors.temperature -> 31.73
-mqttCallback: Set mode for device FAN
-Mode: 2
-Received event
-Received mode change event
-Published: khi3m/feeds/sensors.humidity -> 64.65
-Current time: 0:29
-Received event
-Received timer event
-Control fan
-Temperature: 31.73
-Published: khi3m/feeds/sensors.temperature -> 31.73
-Published: khi3m/feeds/sensors.humidity -> 64.66
-Temperature: 31.72
-Published: khi3m/feeds/sensors.temperature -> 31.72
-Published: khi3m/feeds/sensors.humidity -> 64.66
-Temperature: 31.73
-Published: khi3m/feeds/sensors.temperature -> 31.73
-Published: khi3m/feeds/sensors.humidity -> 64.65
-Temperature: 31.73
-Published: khi3m/feeds/sensors.temperature -> 31.73
-Published: khi3m/feeds/sensors.humidity -> 64.64
-Temperature: 31.72
-Published: khi3m/feeds/sensors.temperature -> 31.72
-Published: khi3m/feeds/sensors.humidity -> 64.64
-Temperature: 31.71
-Published: khi3m/feeds/sensors.temperature -> 31.71
-Published: khi3m/feeds/sensors.humidity -> 64.63
-Temperature: 31.72
-Published: khi3m/feeds/sensors.temperature -> 31.72
-Published: khi3m/feeds/sensors.humidity -> 64.65
-Temperature: 31.73
-Published: khi3m/feeds/sensors.temperature -> 31.73
-Published: khi3m/feeds/sensors.humidity -> 64.64
-mqttCallback: Received event
-Received thresshold change event
-Control fan
-Fan status: 1
-100.00
-Temperature: 31.72
-Published: khi3m/feeds/sensors.temperature -> 31.72
-Published: khi3m/feeds/sensors.humidity -> 64.68
-Temperature: 31.71
-Published: khi3m/feeds/sensors.temperature -> 31.71
-Published: khi3m/feeds/sensors.humidity -> 65.02
-Temperature: 31.73
-Published: khi3m/feeds/sensors.temperature -> 31.73
-Published: khi3m/feeds/sensors.humidity -> 65.24
-Temperature: 31.72
-Published: khi3m/feeds/sensors.temperature -> 31.72
-Published: khi3m/feeds/sensors.humidity -> 65.17
-Current time: 0:30
-Received event
-Received timer event
-Control fan
-Fan status: 1
-100.00
-Temperature: 31.74
-Published: khi3m/feeds/sensors.temperature -> 31.74
-mqttCallback: Manual control for device FAN
-Status: 0
-Received event
-Received manual control event
-Control fan
-Fan status: 1
-100.00
-Published: khi3m/feeds/sensors.humidity -> 65.12
-Temperature: 31.77
-Published: khi3m/feeds/sensors.temperature -> 31.77
-Published: khi3m/feeds/sensors.humidity -> 65.15
-Temperature: 31.79
-Published: khi3m/feeds/sensors.temperature -> 31.79
-Published: khi3m/feeds/sensors.humidity -> 65.07
-Temperature: 31.80
-Published: khi3m/feeds/sensors.temperature -> 31.80
-mqttCallback: Manual control for device FAN
-Status: 0
-Received event
-Received manual control event
-Control fan
-Fan status: 1
-100.00
-Published: khi3m/feeds/sensors.humidity -> 64.90
-Temperature: 31.82
-Published: khi3m/feeds/sensors.temperature -> 31.82
-Published: khi3m/feeds/sensors.humidity -> 64.92
-Temperature: 31.84
-Published: khi3m/feeds/sensors.temperature -> 31.84
-Published: khi3m/feeds/sensors.humidity -> 64.75
-Temperature: 31.83
-Published: khi3m/feeds/sensors.temperature -> 31.83
-Published: khi3m/feeds/sensors.humidity -> 64.77
-Temperature: 31.83
-Published: khi3m/feeds/sensors.temperature -> 31.83
-Published: khi3m/feeds/sensors.humidity -> 64.83
-Temperature: 31.85
-Published: khi3m/feeds/sensors.temperature -> 31.85
-Published: khi3m/feeds/sensors.humidity -> 64.99
-Temperature: 31.85
-Published: khi3m/feeds/sensors.temperature -> 31.85
-Published: khi3m/feeds/sensors.humidity -> 65.04
-Temperature: 31.87
-mqttCallback: Set mode for device FAN
-Mode: 1
-Received event
-Received mode change event
-Published: khi3m/feeds/sensors.temperature -> 31.87
-Published: khi3m/feeds/sensors.humidity -> 64.98
-Temperature: 31.87
-Published: khi3m/feeds/sensors.temperature -> 31.87
-Published: khi3m/feeds/sensors.humidity -> 64.81
-Current time: 0:31
-Received event
-Received timer event
-Schedule mode
-Current time: 0:31
-Temperature: 31.89
-Published: khi3m/feeds/sensors.temperature -> 31.89
-Published: khi3m/feeds/sensors.humidity -> 65.03
-Temperature: 31.90
-Published: khi3m/feeds/sensors.temperature -> 31.90
-Published: khi3m/feeds/sensors.humidity -> 64.90
-Temperature: 31.88
-Published: khi3m/feeds/sensors.temperature -> 31.88
-Published: khi3m/feeds/sensors.humidity -> 64.89
-Temperature: 31.89
-Published: khi3m/feeds/sensors.temperature -> 31.89
-Published: khi3m/feeds/sensors.humidity -> 64.87
-Temperature: 31.90
-Published: khi3m/feeds/sensors.temperature -> 31.90
-Published: khi3m/feeds/sensors.humidity -> 64.98
-Temperature: 31.91
-Published: khi3m/feeds/sensors.temperature -> 31.91
-Published: khi3m/feeds/sensors.humidity -> 65.05
-Temperature: 31.92
-Published: khi3m/feeds/sensors.temperature -> 31.92
-mqttCallback: Manual control for device FAN
-Status: 0
-Received event
-Received manual control event
-Schedule mode
-Published: khi3m/feeds/sensors.humidity -> 65.14
-Temperature: 31.91
-Published: khi3m/feeds/sensors.temperature -> 31.91
-Published: khi3m/feeds/sensors.humidity -> 65.02
-Temperature: 31.93
-Published: khi3m/feeds/sensors.temperature -> 31.93
-Published: khi3m/feeds/sensors.humidity -> 65.19
-Temperature: 31.92
-Published: khi3m/feeds/sensors.temperature -> 31.92
-Published: khi3m/feeds/sensors.humidity -> 64.80
-Temperature: 31.94
-Published: khi3m/feeds/sensors.temperature -> 31.94
-Published: khi3m/feeds/sensors.humidity -> 64.88
-Temperature: 31.93
-Published: khi3m/feeds/sensors.temperature -> 31.93
-Published: khi3m/feeds/sensors.humidity -> 64.89
-Current time: 0:32
-Received event
-Received timer event
-Schedule mode
-Current time: 0:32
-Temperature: 31.95
-Published: khi3m/feeds/sensors.temperature -> 31.95
-Published: khi3m/feeds/sensors.humidity -> 64.95
-Temperature: 31.95
-Published: khi3m/feeds/sensors.temperature -> 31.95
-Published: khi3m/feeds/sensors.humidity -> 64.83
-Temperature: 31.96
-mqttCallback: Manual control for device FAN
-Status: 0
-Received event
-Received manual control event
-Schedule mode
-Published: khi3m/feeds/sensors.temperature -> 31.96
-Published: khi3m/feeds/sensors.humidity -> 65.27
-Temperature: 31.95
-Published: khi3m/feeds/sensors.temperature -> 31.95
-Published: khi3m/feeds/sensors.humidity -> 65.17
-Temperature: 31.96
-Published: khi3m/feeds/sensors.temperature -> 31.96
-Published: khi3m/feeds/sensors.humidity -> 64.91
-Temperature: 31.96
-Published: khi3m/feeds/sensors.temperature -> 31.96
-Published: khi3m/feeds/sensors.humidity -> 64.72
-Temperature: 31.97
-Published: khi3m/feeds/sensors.temperature -> 31.97
-Published: khi3m/feeds/sensors.humidity -> 65.18
-Temperature: 31.97
-Published: khi3m/feeds/sensors.temperature -> 31.97
-Published: khi3m/feeds/sensors.humidity -> 66.20
-Temperature: 31.97
-Published: khi3m/feeds/sensors.temperature -> 31.97
-Published: khi3m/feeds/sensors.humidity -> 66.50
-Temperature: 32.00
-Published: khi3m/feeds/sensors.temperature -> 32.00
-Published: khi3m/feeds/sensors.humidity -> 66.24
-Temperature: 32.01
-Published: khi3m/feeds/sensors.temperature -> 32.01
-Published: khi3m/feeds/sensors.humidity -> 65.49
-Temperature: 32.02
-Published: khi3m/feeds/sensors.temperature -> 32.02
-Current time: 0:33
-Received event
-Received timer event
-Schedule mode
-Current time: 0:33
-Published: khi3m/feeds/sensors.humidity -> 66.00
-Temperature: 32.03
-Published: khi3m/feeds/sensors.temperature -> 32.03
-Published: khi3m/feeds/sensors.humidity -> 66.40
-Temperature: 32.05
-Published: khi3m/feeds/sensors.temperature -> 32.05
-Published: khi3m/feeds/sensors.humidity -> 65.87
-Temperature: 32.05
-Published: khi3m/feeds/sensors.temperature -> 32.05
-Published: khi3m/feeds/sensors.humidity -> 64.49
-Temperature: 32.06
-Published: khi3m/feeds/sensors.temperature -> 32.06
-Published: khi3m/feeds/sensors.humidity -> 64.43
-Temperature: 32.06
-mqttCallback: Manual control for device FAN
-Status: 0
-Received event
-Received manual control event
-Schedule mode
-Published: khi3m/feeds/sensors.temperature -> 32.06
-Published: khi3m/feeds/sensors.humidity -> 64.08
-Temperature: 32.05
-Published: khi3m/feeds/sensors.temperature -> 32.05
-Published: khi3m/feeds/sensors.humidity -> 64.36
-Temperature: 32.04
-Published: khi3m/feeds/sensors.temperature -> 32.04
-Published: khi3m/feeds/sensors.humidity -> 64.25
-Temperature: 32.04
-Published: khi3m/feeds/sensors.temperature -> 32.04
-Published: khi3m/feeds/sensors.humidity -> 64.17
-Temperature: 32.05
-Published: khi3m/feeds/sensors.temperature -> 32.05
-Published: khi3m/feeds/sensors.humidity -> 64.38
-Temperature: 32.05
-Published: khi3m/feeds/sensors.temperature -> 32.05
-Published: khi3m/feeds/sensors.humidity -> 64.16
-Temperature: 32.04
-Published: khi3m/feeds/sensors.temperature -> 32.04
-Published: khi3m/feeds/sensors.humidity -> 64.19
-Temperature: 32.03
-Published: khi3m/feeds/sensors.temperature -> 32.03
-Current time: 0:34
-Received event
-Received timer event
-Schedule mode
-Current time: 0:34
-Published: khi3m/feeds/sensors.humidity -> 64.13
-Temperature: 32.03
-Published: khi3m/feeds/sensors.temperature -> 32.03
-Published: khi3m/feeds/sensors.humidity -> 64.10
-Temperature: 32.03
-Published: khi3m/feeds/sensors.temperature -> 32.03
-Published: khi3m/feeds/sensors.humidity -> 64.10
-mqttCallback: Set mode for device FAN
-Mode: 1
-Received event
-Received mode change event
-Temperature: 32.05
-Published: khi3m/feeds/sensors.temperature -> 32.05
-Published: khi3m/feeds/sensors.humidity -> 64.11
-Temperature: 32.04
-Published: khi3m/feeds/sensors.temperature -> 32.04
-Published: khi3m/feeds/sensors.humidity -> 64.06
-Temperature: 32.04
-Published: khi3m/feeds/sensors.temperature -> 32.04
-Published: khi3m/feeds/sensors.humidity -> 64.07
-Temperature: 32.05
-Published: khi3m/feeds/sensors.temperature -> 32.05
-Published: khi3m/feeds/sensors.humidity -> 64.06
-Temperature: 32.04
-Published: khi3m/feeds/sensors.temperature -> 32.04
-Published: khi3m/feeds/sensors.humidity -> 64.05
-Temperature: 32.03
-Published: khi3m/feeds/sensors.temperature -> 32.03
-Published: khi3m/feeds/sensors.humidity -> 64.03
-mqttCallback: Schedule added: 0:36, status: 1, speed: 2
-Temperature: 32.03
-Published: khi3m/feeds/sensors.temperature -> 32.03
-Published: khi3m/feeds/sensors.humidity -> 64.07
-Temperature: 32.05
-Published: khi3m/feeds/sensors.temperature -> 32.05
-Published: khi3m/feeds/sensors.humidity -> 64.03
-Temperature: 32.05
-Published: khi3m/feeds/sensors.temperature -> 32.05
-Published: khi3m/feeds/sensors.humidity -> 64.02
-Temperature: 32.06
-Published: khi3m/feeds/sensors.temperature -> 32.06
-Current time: 0:35
-Received event
-Received timer event
-Schedule mode
-Current time: 0:35
-Published: khi3m/feeds/sensors.humidity -> 64.07
-Temperature: 32.06
-Published: khi3m/feeds/sensors.temperature -> 32.06
-Published: khi3m/feeds/sensors.humidity -> 64.09
-Temperature: 32.06
-Published: khi3m/feeds/sensors.temperature -> 32.06
-Published: khi3m/feeds/sensors.humidity -> 64.07
-Temperature: 32.08
-Published: khi3m/feeds/sensors.temperature -> 32.08
-Published: khi3m/feeds/sensors.humidity -> 64.03
-Temperature: 32.09
-Published: khi3m/feeds/sensors.temperature -> 32.09
-Published: khi3m/feeds/sensors.humidity -> 64.04
-Temperature: 32.08
-Published: khi3m/feeds/sensors.temperature -> 32.08
-Published: khi3m/feeds/sensors.humidity -> 63.98
-Temperature: 32.08
-Published: khi3m/feeds/sensors.temperature -> 32.08
-Published: khi3m/feeds/sensors.humidity -> 63.92
-Temperature: 32.09
-Published: khi3m/feeds/sensors.temperature -> 32.09
-Published: khi3m/feeds/sensors.humidity -> 63.93
-Temperature: 32.11
-Published: khi3m/feeds/sensors.temperature -> 32.11
-Published: khi3m/feeds/sensors.humidity -> 63.88
-Temperature: 32.11
-Published: khi3m/feeds/sensors.temperature -> 32.11
-Published: khi3m/feeds/sensors.humidity -> 63.91
-Temperature: 32.12
-Published: khi3m/feeds/sensors.temperature -> 32.12
-Published: khi3m/feeds/sensors.humidity -> 63.82
-Temperature: 32.11
-Published: khi3m/feeds/sensors.temperature -> 32.11
-Published: khi3m/feeds/sensors.humidity -> 63.79
-Temperature: 32.12
-Published: khi3m/feeds/sensors.temperature -> 32.12
-Current time: 0:36
-Received event
-Received timer event
-Schedule mode
-Current time: 0:36
-Schedule matched
-Control fan
-Fan status: 1
-2.00
-Published: khi3m/feeds/sensors.humidity -> 63.83
-Temperature: 32.13
-Published: khi3m/feeds/sensors.temperature -> 32.13
-Published: khi3m/feeds/sensors.humidity -> 63.94
-Temperature: 32.13
-Published: khi3m/feeds/sensors.temperature -> 32.13
-Published: khi3m/feeds/sensors.humidity -> 63.92
-Temperature: 32.14
-Published: khi3m/feeds/sensors.temperature -> 32.14
-Published: khi3m/feeds/sensors.humidity -> 63.83
-Temperature: 32.16
-Published: khi3m/feeds/sensors.temperature -> 32.16
-Published: khi3m/feeds/sensors.humidity -> 63.96
-Temperature: 32.16
-Published: khi3m/feeds/sensors.temperature -> 32.16
-Published: khi3m/feeds/sensors.humidity -> 63.84
-mqttCallback: Set mode for device FAN
-Mode: 1
-Received event
-Received mode change event
-Temperature: 32.16
-Published: khi3m/feeds/sensors.temperature -> 32.16
-Published: khi3m/feeds/sensors.humidity -> 64.15
-Temperature: 32.17
-Published: khi3m/feeds/sensors.temperature -> 32.17
-mqttCallback: Manual control for device FAN
-Status: 1
-Received event
-Received manual control event
-Schedule mode
-Control fan
-Fan status: 1
-2.00
-Published: khi3m/feeds/sensors.humidity -> 63.98
-Temperature: 32.16
-Published: khi3m/feeds/sensors.temperature -> 32.16
-Published: khi3m/feeds/sensors.humidity -> 63.97
-Temperature: 32.17
-Published: khi3m/feeds/sensors.temperature -> 32.17
-Published: khi3m/feeds/sensors.humidity -> 63.91
-Temperature: 32.17
-Published: khi3m/feeds/sensors.temperature -> 32.17
-Published: khi3m/feeds/sensors.humidity -> 63.78
-mqttCallback: Schedule added: 8:30, status: 1, speed: 2
-Temperature: 32.16
-Published: khi3m/feeds/sensors.temperature -> 32.16
-Published: khi3m/feeds/sensors.humidity -> 63.90
-Temperature: 32.17
-Current time: 0:37
-Received event
-Received timer event
-Schedule mode
-Current time: 0:37
-Published: khi3m/feeds/sensors.temperature -> 32.17
-Published: khi3m/feeds/sensors.humidity -> 64.10
-Temperature: 32.17
-Published: khi3m/feeds/sensors.temperature -> 32.17
-Published: khi3m/feeds/sensors.humidity -> 64.48
-Temperature: 32.20
-Published: khi3m/feeds/sensors.temperature -> 32.20
-Published: khi3m/feeds/sensors.humidity -> 64.54
-mqttCallback: Schedule list is full
-Schedule added: 8:30, status: 1, speed: 2
-Temperature: 32.21
-Published: khi3m/feeds/sensors.temperature -> 32.21
+21:44:14:605 -> Published: khi3m/feeds/sensors.light -> 14.00
+21:44:15:315 -> Received event
+21:44:15:315 -> Received auto update event
+21:44:15:318 -> Fan status: 0
+21:44:15:318 -> 100.00
+21:44:15:321 -> Received event
+21:44:15:321 -> Received auto update event
+21:44:15:323 -> LED status: 0
+21:44:15:323 -> LED brightness: 100
+21:44:16:316 -> Received event
+21:44:16:316 -> Received auto update event
+21:44:16:319 -> Fan status: 0
+21:44:16:319 -> 100.00
+21:44:16:322 -> Received event
+21:44:16:322 -> Received auto update event
+21:44:16:324 -> LED status: 0
+21:44:16:324 -> LED brightness: 100
+21:44:16:610 -> Published: khi3m/feeds/sensors.temperature -> 30.78
+21:44:17:317 -> Received event
+21:44:17:317 -> Received auto update event
+21:44:17:320 -> Fan status: 0
+21:44:17:320 -> 100.00
+21:44:17:323 -> Received event
+21:44:17:323 -> Received auto update event
+21:44:17:325 -> LED status: 0
+21:44:17:325 -> LED brightness: 100
+21:44:18:318 -> Received event
+21:44:18:318 -> Received auto update event
+21:44:18:321 -> Fan status: 0
+21:44:18:321 -> 100.00
+21:44:18:323 -> Received event
+21:44:18:323 -> Received auto update event
+21:44:18:326 -> LED status: 0
+21:44:18:326 -> LED brightness: 100
+21:44:18:616 -> Published: khi3m/feeds/sensors.humidity -> 72.39
+21:44:18:776 -> Temperature: 30.76
+21:44:18:776 -> Light: 55.00
+21:44:19:319 -> Received event
+21:44:19:319 -> Received auto update event
+21:44:19:322 -> Fan status: 0
+21:44:19:322 -> 100.00
+21:44:19:325 -> Received event
+21:44:19:325 -> Received auto update event
+21:44:19:327 -> LED status: 0
+21:44:19:327 -> LED brightness: 100
+21:44:20:320 -> Received event
+21:44:20:320 -> Received auto update event
+21:44:20:323 -> Fan status: 0
+21:44:20:323 -> 100.00
+21:44:20:326 -> Received event
+21:44:20:326 -> Received auto update event
+21:44:20:328 -> LED status: 0
+21:44:20:328 -> LED brightness: 100
+21:44:20:621 -> Published: khi3m/feeds/sensors.light -> 54.00
+21:44:21:321 -> Received event
+21:44:21:321 -> Received auto update event
+21:44:21:324 -> Fan status: 0
+21:44:21:324 -> 100.00
+21:44:21:327 -> Received event
+21:44:21:327 -> Received auto update event
+21:44:21:329 -> LED status: 0
+21:44:21:329 -> LED brightness: 100
+21:44:22:322 -> Received event
+21:44:22:322 -> Received auto update event
+21:44:22:325 -> Fan status: 0
+21:44:22:325 -> 100.00
+21:44:22:328 -> Received event
+21:44:22:328 -> Received auto update event
+21:44:22:330 -> LED status: 0
+21:44:22:330 -> LED brightness: 100
+21:44:22:631 -> Published: khi3m/feeds/sensors.temperature -> 30.78
+21:44:23:324 -> Received event
+21:44:23:324 -> Received auto update event
+21:44:23:326 -> Fan status: 0
+21:44:23:326 -> 100.00
+21:44:23:329 -> Received event
+21:44:23:329 -> Received auto update event
+21:44:23:332 -> LED status: 0
+21:44:23:332 -> LED brightness: 100
+21:44:23:821 -> Temperature: 30.77
+21:44:23:821 -> Light: 55.00
+21:44:24:324 -> Received event
+21:44:24:324 -> Received auto update event
+21:44:24:327 -> Fan status: 0
+21:44:24:327 -> 100.00
+21:44:24:330 -> Received event
+21:44:24:330 -> Received auto update event
+21:44:24:332 -> LED status: 0
+21:44:24:332 -> LED brightness: 100
+21:44:24:636 -> Published: khi3m/feeds/sensors.humidity -> 72.38
+21:44:25:325 -> Received event
+21:44:25:325 -> Received auto update event
+21:44:25:328 -> Fan status: 0
+21:44:25:328 -> 100.00
+21:44:25:331 -> Received event
+21:44:25:331 -> Received auto update event
+21:44:25:333 -> LED status: 0
+21:44:25:333 -> LED brightness: 100
+21:44:26:326 -> Received event
+21:44:26:326 -> Received auto update event
+21:44:26:329 -> Fan status: 0
+21:44:26:329 -> 100.00
+21:44:26:332 -> Received event
+21:44:26:332 -> Received auto update event
+21:44:26:334 -> LED status: 0
+21:44:26:334 -> LED brightness: 100
+21:44:26:641 -> Published: khi3m/feeds/sensors.light -> 55.00
+21:44:27:327 -> Received event
+21:44:27:327 -> Received auto update event
+21:44:27:330 -> Fan status: 0
+21:44:27:330 -> 100.00
+21:44:27:333 -> Received event
+21:44:27:333 -> Received auto update event
+21:44:27:335 -> LED status: 0
+21:44:27:335 -> LED brightness: 100
+21:44:28:268 -> Current time: 21:44
+21:44:28:268 -> Received event
+21:44:28:270 -> Received timer event
+21:44:28:270 -> Fan status: 0
+21:44:28:273 -> Received event
+21:44:28:273 -> Received timer event
+21:44:28:276 -> LED status: 0
+21:44:28:276 -> LED brightness: 100
+21:44:28:280 -> 100.00
+21:44:28:379 -> Received event
+21:44:28:379 -> Received auto update event
+21:44:28:382 -> LED status: 0
+21:44:28:382 -> LED brightness: 100
+21:44:28:385 -> Received event
+21:44:28:388 -> Received auto update event
+21:44:28:388 -> Fan status: 0
+21:44:28:390 -> 100.00
+21:44:28:646 -> Published: khi3m/feeds/sensors.temperature -> 30.76
+21:44:28:867 -> Temperature: 30.78
+21:44:28:867 -> Light: 54.00
+21:44:29:328 -> Received event
+21:44:29:328 -> Received auto update event
+21:44:29:331 -> Fan status: 0
+21:44:29:331 -> 100.00
+21:44:29:334 -> Received event
+21:44:29:334 -> Received auto update event
+21:44:29:336 -> LED status: 0
+21:44:29:336 -> LED brightness: 100
+21:44:30:329 -> Received event
+21:44:30:329 -> Received auto update event
+21:44:30:332 -> Fan status: 0
+21:44:30:332 -> 100.00
+21:44:30:335 -> Received event
+21:44:30:335 -> Received auto update event
+21:44:30:337 -> LED status: 0
+21:44:30:337 -> LED brightness: 100
+21:44:30:651 -> Published: khi3m/feeds/sensors.humidity -> 72.38
+21:44:31:330 -> Received event
+21:44:31:330 -> Received auto update event
+21:44:31:333 -> Fan status: 0
+21:44:31:333 -> 100.00
+21:44:31:336 -> Received event
+21:44:31:336 -> Received auto update event
+21:44:31:339 -> LED status: 0
+21:44:31:339 -> LED brightness: 100
+21:44:32:331 -> Received event
+21:44:32:331 -> Received auto update event
+21:44:32:334 -> Fan status: 0
+21:44:32:334 -> 100.00
+21:44:32:337 -> Received event
+21:44:32:337 -> Received auto update event
+21:44:32:340 -> LED status: 0
+21:44:32:340 -> LED brightness: 100
+21:44:32:657 -> Published: khi3m/feeds/sensors.light -> 55.00
+21:44:33:332 -> Received event
+21:44:33:332 -> Received auto update event
+21:44:33:335 -> Fan status: 0
+21:44:33:335 -> 100.00
+21:44:33:338 -> Received event
+21:44:33:338 -> Received auto update event
+21:44:33:341 -> LED status: 0
+21:44:33:341 -> LED brightness: 100
+21:44:33:914 -> Temperature: 30.75
+21:44:33:914 -> Light: 54.00
+21:44:34:333 -> Received event
+21:44:34:333 -> Received auto update event
+21:44:34:336 -> Fan status: 0
+21:44:34:336 -> 100.00
+21:44:34:339 -> Received event
+21:44:34:339 -> Received auto update event
+21:44:34:341 -> LED status: 0
+21:44:34:341 -> LED brightness: 100
+21:44:34:662 -> Published: khi3m/feeds/sensors.temperature -> 30.77
+21:44:35:334 -> Received event
+21:44:35:334 -> Received auto update event
+21:44:35:337 -> Fan status: 0
+21:44:35:337 -> 100.00
+21:44:35:340 -> Received event
+21:44:35:340 -> Received auto update event
+21:44:35:343 -> LED status: 0
+21:44:35:343 -> LED brightness: 100
+21:44:36:335 -> Received event
+21:44:36:335 -> Received auto update event
+21:44:36:338 -> Fan status: 0
+21:44:36:338 -> 100.00
+21:44:36:341 -> Received event
+21:44:36:341 -> Received auto update event
+21:44:36:343 -> LED status: 0
+21:44:36:343 -> LED brightness: 100
+21:44:36:671 -> Published: khi3m/feeds/sensors.humidity -> 72.40
+21:44:37:336 -> Received event
+21:44:37:336 -> Received auto update event
+21:44:37:339 -> Fan status: 0
+21:44:37:339 -> 100.00
+21:44:37:342 -> Received event
+21:44:37:342 -> Received auto update event
+21:44:37:344 -> LED status: 0
+21:44:37:344 -> LED brightness: 100
+21:44:38:337 -> Received event
+21:44:38:337 -> Received auto update event
+21:44:38:340 -> Fan status: 0
+21:44:38:340 -> 100.00
+21:44:38:343 -> Received event
+21:44:38:343 -> Received auto update event
+21:44:38:346 -> LED status: 0
+21:44:38:346 -> LED brightness: 100
+21:44:38:676 -> Published: khi3m/feeds/sensors.light -> 55.00
+21:44:38:962 -> Temperature: 30.75
+21:44:38:962 -> Light: 54.00
+21:44:39:338 -> Received event
+21:44:39:338 -> Received auto update event
+21:44:39:341 -> Fan status: 0
+21:44:39:341 -> 100.00
+21:44:39:344 -> Received event
+21:44:39:344 -> Received auto update event
+21:44:39:347 -> LED status: 0
+21:44:39:347 -> LED brightness: 100
+21:44:40:340 -> Received event
+21:44:40:340 -> Received auto update event
+21:44:40:343 -> Received event
+21:44:40:343 -> Received auto update event
+21:44:40:345 -> LED status: 0
+21:44:40:348 -> LED brightness: 100
+21:44:40:348 -> Fan status: 0
+21:44:40:351 -> 100.00
+21:44:40:681 -> Published: khi3m/feeds/sensors.temperature -> 30.78
+21:44:41:340 -> Received event
+21:44:41:340 -> Received auto update event
+21:44:41:343 -> Fan status: 0
+21:44:41:343 -> 100.00
+21:44:41:346 -> Received event
+21:44:41:346 -> Received auto update event
+21:44:41:349 -> LED status: 0
+21:44:41:349 -> LED brightness: 100
+21:44:42:341 -> Received event
+21:44:42:341 -> Received auto update event
+21:44:42:344 -> Fan status: 0
+21:44:42:344 -> 100.00
+21:44:42:347 -> Received event
+21:44:42:347 -> Received auto update event
+21:44:42:349 -> LED status: 0
+21:44:42:349 -> LED brightness: 100
+21:44:42:686 -> Published: khi3m/feeds/sensors.humidity -> 72.40
+21:44:43:343 -> Received event
+21:44:43:343 -> Received auto update event
+21:44:43:345 -> Fan status: 0
+21:44:43:345 -> 100.00
+21:44:43:348 -> Received event
+21:44:43:348 -> Received auto update event
+21:44:43:351 -> LED status: 0
+21:44:43:351 -> LED brightness: 100
+21:44:44:007 -> Temperature: 30.76
+21:44:44:007 -> Light: 55.00
+21:44:44:343 -> Received event
+21:44:44:343 -> Received auto update event
+21:44:44:346 -> Fan status: 0
+21:44:44:346 -> 100.00
+21:44:44:349 -> Received event
+21:44:44:349 -> Received auto update event
+21:44:44:352 -> LED status: 0
+21:44:44:352 -> LED brightness: 100
+21:44:44:691 -> Published: khi3m/feeds/sensors.light -> 54.00
+21:44:45:344 -> Received event
+21:44:45:344 -> Received auto update event
+21:44:45:347 -> Fan status: 0
+21:44:45:347 -> 100.00
+21:44:45:350 -> Received event
+21:44:45:350 -> Received auto update event
+21:44:45:353 -> LED status: 0
+21:44:45:353 -> LED brightness: 100
+21:44:46:345 -> Received event
+21:44:46:345 -> Received auto update event
+21:44:46:348 -> Fan status: 0
+21:44:46:348 -> 100.00
+21:44:46:351 -> Received event
+21:44:46:351 -> Received auto update event
+21:44:46:354 -> LED status: 0
+21:44:46:354 -> LED brightness: 100
+21:44:46:695 -> Published: khi3m/feeds/sensors.temperature -> 30.75
+21:44:47:346 -> Received event
+21:44:47:346 -> Received auto update event
+21:44:47:349 -> Fan status: 0
+21:44:47:349 -> 100.00
+21:44:47:352 -> Received event
+21:44:47:352 -> Received auto update event
+21:44:47:355 -> LED status: 0
+21:44:47:355 -> LED brightness: 100
+21:44:48:347 -> Received event
+21:44:48:347 -> Received auto update event
+21:44:48:350 -> Fan status: 0
+21:44:48:350 -> 100.00
+21:44:48:353 -> Received event
+21:44:48:353 -> Received auto update event
+21:44:48:356 -> LED status: 0
+21:44:48:356 -> LED brightness: 100
+21:44:48:701 -> Published: khi3m/feeds/sensors.humidity -> 72.47
+21:44:49:056 -> Temperature: 30.74
+21:44:49:056 -> Light: 56.00
+21:44:49:348 -> Received event
+21:44:49:348 -> Received auto update event
+21:44:49:351 -> Fan status: 0
+21:44:49:351 -> 100.00
+21:44:49:354 -> Received event
+21:44:49:354 -> Received auto update event
+21:44:49:357 -> LED status: 0
+21:44:49:357 -> LED brightness: 100
+21:44:50:349 -> Received event
+21:44:50:349 -> Received auto update event
+21:44:50:352 -> Fan status: 0
+21:44:50:352 -> 100.00
+21:44:50:355 -> Received event
+21:44:50:355 -> Received auto update event
+21:44:50:358 -> LED status: 0
+21:44:50:358 -> LED brightness: 100
+21:44:50:706 -> Published: khi3m/feeds/sensors.light -> 54.00
+21:44:51:350 -> Received event
+21:44:51:350 -> Received auto update event
+21:44:51:353 -> Fan status: 0
+21:44:51:353 -> 100.00
+21:44:51:356 -> Received event
+21:44:51:356 -> Received auto update event
+21:44:51:359 -> LED status: 0
+21:44:51:359 -> LED brightness: 100
+21:44:52:351 -> Received event
+21:44:52:351 -> Received auto update event
+21:44:52:354 -> Fan status: 0
+21:44:52:354 -> 100.00
+21:44:52:357 -> Received event
+21:44:52:357 -> Received auto update event
+21:44:52:360 -> LED status: 0
+21:44:52:360 -> LED brightness: 100
+21:44:52:716 -> Published: khi3m/feeds/sensors.temperature -> 30.75
+21:44:53:353 -> Received event
+21:44:53:353 -> Received auto update event
+21:44:53:356 -> Fan status: 0
+21:44:53:356 -> 100.00
+21:44:53:359 -> Received event
+21:44:53:359 -> Received auto update event
+21:44:53:361 -> LED status: 0
+21:44:53:361 -> LED brightness: 100

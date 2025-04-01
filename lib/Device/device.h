@@ -4,6 +4,7 @@
 #include <freertos/semphr.h>
 #include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
+#include <FastLED.h>
 
 #define LED_PIN 26 // GPIO P10 
 #define LED_NUMBER 4 
@@ -40,7 +41,7 @@ struct LEDScheduleEntry {
     int hour;
     int minute;
     bool status;
-    int brightness;
+    float brightness;
 };
 struct FanScheduleEntry {
     int hour;
@@ -127,17 +128,15 @@ class Fan : public Device {
 
 class LED : public Device {
     private:
-        Adafruit_NeoPixel pixels;
-        int brightness;
+        CRGB leds[LED_NUMBER];
+        float brightness;
         float* lightValue;
         float threshold;
         LEDScheduleEntry* schedule;
     public:
         LED(float* lightValue, int scheduleSize) : Device(scheduleSize), brightness(100), threshold(50), lightValue(lightValue) {
-            pixels = Adafruit_NeoPixel(LED_NUMBER, LED_PIN, NEO_GRB + NEO_KHZ800);
-            pixels.begin();
-            pixels.setBrightness(brightness);
-            pixels.show();
+            FastLED.addLeds<WS2812B, LED_PIN, GRB>(leds, LED_NUMBER); // Khởi tạo RMT
+            FastLED.setBrightness(brightness);
             schedule = new LEDScheduleEntry[scheduleSize];
         }
         ~LED() {
@@ -147,21 +146,19 @@ class LED : public Device {
         void deleteSchedule(int index);
         void handleEvent(Event event, void* data) override; 
     protected:
-        void control() override{
-            Serial.println("LED status: " + String(status));
-            Serial.println("LED brightness: " + String(brightness));
-            if (status) {
-                // TODO:
-                for (int i = 0; i < LED_NUMBER; i++) {
-                    pixels.setBrightness(brightness); // Set brightness
-                    pixels.setPixelColor(i, pixels.Color(255, 255, 255)); // Set color to white
-                }
-                pixels.show();
-            } else {
-                // TODO: 
-                pixels.clear(); // Clear the pixels
-                pixels.show();
+    void control() override {
+        Serial.println("LED status: " + String(status));
+        Serial.println("LED brightness: " + String(brightness));
+        if (status) {
+            for (int i = 0; i < LED_NUMBER; i++) {
+                leds[i] = CRGB(255, 255, 255); // Màu trắng
             }
-        };      
+            FastLED.setBrightness(brightness);
+            FastLED.show(); // Gửi qua RMT
+        } else {
+            FastLED.clear();
+            FastLED.show();
+        }
+    }    
 };
 #endif

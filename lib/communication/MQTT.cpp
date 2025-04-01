@@ -21,14 +21,23 @@ void setupMQTT() {
   client.setServer(MQTT_SERVER, MQTT_PORT);
   client.setCallback(mqttCallback);
   String ClientID = "ESP32Client" + String(random(0xffff), HEX);
-  if (client.connect(ClientID.c_str(), MQTT_USER, MQTT_API_KEY)) {
-      Serial.println("MQTT Connected and subcribe topic successfull!");
-      client.subscribe(TOPIC_SUB_FAN);
-      // ...
-  } else {
-      Serial.print("failed with state ");
-      Serial.println(client.state());
-  }
+//  // for io.adafruit.com 
+//   if (client.connect(ClientID.c_str(), MQTT_USER, MQTT_API_KEY)) {
+//     Serial.println("MQTT Connected and subcribe topic successfull!");
+//     client.subscribe(TOPIC_SUB_FAN);
+//     client.subscribe(TOPIC_SUB_LED);
+//     // ...
+//   }
+    // for test.mosquitto.org
+    if (client.connect(ClientID.c_str())){
+        Serial.println("MQTT Connected and subcribe topic successfull!");
+        client.subscribe(TOPIC_SUB_FAN);
+        client.subscribe(TOPIC_SUB_LED);
+        // ...
+    } else {
+        Serial.print("failed with state ");
+        Serial.println(client.state());
+    }
 }
   
 
