@@ -33,6 +33,7 @@ void setupMQTT() {
         Serial.println("MQTT Connected and subcribe topic successfull!");
         client.subscribe(TOPIC_SUB_FAN);
         client.subscribe(TOPIC_SUB_LED);
+        client.subscribe(TOPIC_SUB_DOOR);
         // ...
     } else {
         Serial.print("failed with state ");
@@ -175,6 +176,51 @@ void mqttCallback(char* topic, byte* payload, unsigned int length){
         else if (action == "delete_schedule"){
             int index = doc["index"];
             ledDevice.deleteSchedule(index);
+        }
+    }
+    else if (topicStr == TOPIC_SUB_DOOR){
+        String action = doc["action"];
+        if (action == "set_mode"){
+            Mode mode = (Mode) doc["mode"];
+            EventData eventData;
+            eventData.event = EVENT_SET_MODE;
+            eventData.data.modeValue = mode;
+            Serial.printf("Set mode for device\n" );
+            Serial.printf("Mode: %d\n", mode);
+            if (xQueueSend(queueMappings[DOORQUEUE].queue, &eventData, 0) != pdTRUE) {
+                Serial.printf("Failed to send data to queue for device\n" );
+            }
+        }
+        else if (action == "manual_control"){
+            bool status = doc["status"];
+            EventData eventData;
+            eventData.event = EVENT_MANUAL_CONTROL;
+            eventData.data.boolValue = status;
+            Serial.printf("Manual control for device\n" );
+            Serial.printf("Status: %d\n", status);
+            if (xQueueSend(queueMappings[DOORQUEUE].queue, &eventData, 0) != pdTRUE) {
+                Serial.printf("Failed to send data to queue for device\n" );
+            }
+        }
+        else if (action == "set_password"){
+            bool isSetPassWord = doc["is_set_password"];
+            EventData eventData;
+            eventData.event = EVENT_SET_PASSWORD;
+            eventData.data.boolValue = isSetPassWord;
+            if (xQueueSend(queueMappings[DOORQUEUE].queue, &eventData, 0) != pdTRUE) {
+                Serial.printf("Failed to send data to queue for device\n" );
+            }
+        }
+        else if (action == "set_threshold"){
+            float threshold = doc["threshold"];
+            EventData eventData;
+            eventData.event = EVENT_THRESHOLE_CHANGE;
+            eventData.data.floatValue = threshold;
+            Serial.printf("Set thresshold for device\n" );
+            Serial.printf("Thresshold: %f\n", threshold);
+            if (xQueueSend(queueMappings[DOORQUEUE].queue, &eventData, 0) != pdTRUE) {
+                Serial.printf("Failed to send data to queue for device\n" );
+            }
         }
     }
     //...

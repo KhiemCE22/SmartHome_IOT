@@ -18,7 +18,7 @@ float lightValue;
 
 Fan fanDevice(&temperatureValue,SCHEDULE_SIZE);
 LED ledDevice(&lightValue, SCHEDULE_SIZE); 
-
+Door doorDevice(&distanceValue);
 QueueMapping  queueMappings[DEVICECOUNT];
 
 struct tm currentTime;
@@ -31,7 +31,7 @@ void pinSetup(){
     pinMode(BUZZER_PIN, OUTPUT);
     pinMode(LIGHT_SENSOR_PIN, OUTPUT);
     pinMode(FAN_PIN, OUTPUT);
-    //pinMode(LED_PIN, OUTPUT);
+    // pinMode(SERVO_PIN, OUTPUT);
     Wire.begin(SDAPIN, SCLPIN); 
 }
 

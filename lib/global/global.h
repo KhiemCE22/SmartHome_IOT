@@ -17,23 +17,25 @@
 #define SCHEDULE_SIZE 2
 // GPIO configuration
 #define BUZZER_PIN 25     //  BUZZER_PIN
-#define FAN_PIN 19 // GPIO P14
+#define FAN_PIN 27 // GPIO P2 
 #define LED_PIN 26 // GPIO P10 
 #define LED_NUMBER 4 
-#define SERVO_PIN 12 //P6
+#define SERVO_PIN 15 //P4
 
 #define LIGHT_SENSOR_PIN  32 // GPIO P0 ADC
-#define ULTRASONIC_ECHO 2 // GPIO P12
-#define ULTRASONIC_TRIG 5 // GPIO P16
+#define ULTRASONIC_TRIG 19 // GPIO P16 -> P14
+#define ULTRASONIC_ECHO 23 // GPIO P12 -> P15
 #define MQ2_PIN 33// GPIO P1 ADC 
 
 #define SDAPIN 21
 #define SCLPIN 22
 
 
-#define DEVICECOUNT 2
+#define DEVICECOUNT 3// include fan, led, door
 #define FANQUEUE 0
 #define LEDQUEUE 1
+#define DOORQUEUE 2
+
 // configuration NTP
 
 
@@ -61,7 +63,7 @@ extern QueueHandle_t publishQueue;
 
 extern Fan fanDevice;
 extern LED ledDevice;
-// Light lightDevice;
+extern Door doorDevice;
 extern float distanceValue;
 // extern float gasValue;
 extern float temperatureValue;
@@ -69,12 +71,12 @@ extern float humidityValue;
 extern float lightValue;
 extern QueueMapping  queueMappings[DEVICECOUNT];
 
-
-// extern QueueHandle_t queues[];
+extern QueueHandle_t queues[];
   
-// extern TaskParams fanTaskParams;
+
 
 
 extern DHT20 DHT;
 void pinSetup(void);
+
 #endif

@@ -5,11 +5,18 @@
 #include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
 #include <FastLED.h>
-
+#include <ESP32Servo.h>
+#include <LiquidCrystal_I2C.h>
+#define BUZZER_PIN 25     //  BUZZER_PIN
+#define FAN_PIN 27 // GPIO P2
 #define LED_PIN 26 // GPIO P10 
 #define LED_NUMBER 4 
+#define SERVO_PIN 15 //GPIO P4
+#define LCD_ADDR 0x21
 
 
+extern LiquidCrystal_I2C lcd; // Khởi tạo LCD I2C với địa chỉ 0x27 và kích thước 16x2
+// extern SemaphoreHandle_t i2cMutex;
 enum Mode
 {
     MANUAL = 0,
@@ -23,7 +30,8 @@ enum Event {
     EVENT_SET_PARAMETER,   // Cài đặt thông số (tốc độ, độ sáng)
     EVENT_TIMER,          // Kiểm tra thời gian  hiện tại với lịch trình
     EVENT_THRESHOLE_CHANGE,   // Thay đổi giá trị threshold (chỉ dùng cho AUTO)
-    EVENT_AUTO_UPDATE   // Cập nhật tự động (chỉ dùng cho AUTO)
+    EVENT_AUTO_UPDATE,   // Cập nhật tự động (chỉ dùng cho AUTO)
+    EVENT_SET_PASSWORD   // Cài đặt mật khẩu (chỉ dùng cho Door)
 };
 
 struct EventData {
@@ -74,32 +82,11 @@ class Device {
         virtual void control()=0;
 };
 
-// class Light : public Device {
-//     private:
-//         uint8_t LightPin = 33;
-//         uint8_t LightCount = 4;
-//         int threshold;
-//         int brightness;
-//         LightScheduleEntry schedule[2];
-//         int scheduleCounter;
-//     public:
-//         Light() : Device(), threshold(50), brightness(100), scheduleCounter(0) {}
-//         void addSchedule(int hour, int minute, bool status, int brightness);
-//         void deleteSchedule(int index);
-//         void handleEvent(Event event, void* data) override; 
-//     protected:
-//         void control() override{
-//             if (status) {
-//                 analogWrite(LightPin, map(brightness, 0, 100, 0, 255));
-//             } else {
-//                 analogWrite(LightPin, 0);
-//             }
-//         };      
-// };
+
 
 class Fan : public Device {
     private:
-        uint8_t FanPin = 19; // GPIO P14
+        uint8_t FanPin = FAN_PIN; // GPIO P2
         float threshold;
         float speed;
         float* temperatureValue;
@@ -160,5 +147,68 @@ class LED : public Device {
             FastLED.show();
         }
     }    
+};
+
+
+class Door: public Device {
+    private:
+        float* distanceValue; 
+        float threshold; // Ngưỡng khoảng cách để mở cửa (cm)
+        bool setPassword; // true: có mật khẩu, false: không có mật khẩu, chỉ set cờ chứ không kiểm tra mật khẩu trên phần cứng
+                         // Nhập mật khẩu thông qua app và điều khiển cửa mở hoặc đóng
+        Servo servo; // Đối tượng Servo
+        // Đối tượng LCD
+    public:
+        Door(float* distanceValue) : Device(0), distanceValue(distanceValue), threshold(50), setPassword(false){ 
+            if (servo.attach(SERVO_PIN)) {
+                Serial.println("Servo attached successfully");
+            } else {
+                Serial.println("Failed to attach servo");
+            }
+            // LCD_display();
+            // lcd.init();
+            // lcd.backlight();
+        // if (xSemaphoreTake(i2cMutex, portMAX_DELAY)) {
+        //         lcd.init();
+        //         lcd.backlight();
+        //         xSemaphoreGive(i2cMutex);
+        //     }
+        } // dont need schedule
+        void handleEvent(Event event, void* data) override; 
+        void LCD_display() {
+            lcd.clear();
+            Serial.println("LCD display: " + String(status));   
+            if (currentMode == MANUAL) {
+                if (!status) {
+                    if (setPassword) {
+                        lcd.setCursor(0, 0);
+                        lcd.print("Door is locked");
+                        lcd.setCursor(0, 1);
+                        lcd.print("Enter password on app");
+                    } else {
+                        lcd.setCursor(0, 0);
+                        lcd.print("Door is unlocked");
+                    }
+                } else {
+                    lcd.setCursor(0, 0);
+                    lcd.print("Door is opened");
+                }
+            } else if (currentMode == AUTO) {
+                lcd.setCursor(0, 0);
+                lcd.print("Door is in auto mode");
+            }
+        }
+    protected:
+        void control() override{
+            Serial.println("Door status: " + String(status));
+            if (status){
+                Serial.println("Open");
+                servo.write(90);
+            }
+            else {
+                Serial.println("Close");
+                servo.write(0); 
+            }
+        }  
 };
 #endif

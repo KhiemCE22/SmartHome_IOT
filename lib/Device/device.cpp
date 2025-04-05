@@ -1,5 +1,6 @@
 #include "device.h"
-
+// SemaphoreHandle_t i2cMutex = xSemaphoreCreateMutex();
+LiquidCrystal_I2C lcd(LCD_ADDR, 16, 2);
 void Fan::addSchedule(int hour, int minute, bool status, int speed) {
     if (hour < 0 || hour > 23 || minute < 0 || minute > 59 || speed < 0 || speed > 100) {
         Serial.println("Invalid schedule parameters");
@@ -181,6 +182,54 @@ void LED::handleEvent(Event event, void* data){
                 break;
             default:
                 break;
+        }
+    }
+    xSemaphoreGive(mutex);
+}
+
+
+void Door::handleEvent(Event event, void* data){
+    Serial.println("Door event: " + String(event));
+    xSemaphoreTake(mutex, portMAX_DELAY);
+    if (event == EVENT_SET_MODE) {
+        Mode newMode = *(Mode*)data;
+        if (newMode == MANUAL || newMode == AUTO) {
+            currentMode = newMode;
+            LCD_display();
+        }
+    }
+    else {
+        switch (currentMode)
+        {
+        case MANUAL:
+            if (event == EVENT_MANUAL_CONTROL) {
+                status = *(bool*)data;
+                control();
+                LCD_display();
+            } else if (event == EVENT_SET_PASSWORD) {
+                setPassword = *(bool*)data;
+                LCD_display();
+            }
+            break;
+        case AUTO:
+            if (event == EVENT_MANUAL_CONTROL) {
+                status = *(bool*)data;
+                control();
+                LCD_display();
+            } else if (event == EVENT_SET_PASSWORD) {
+                setPassword = *(bool*)data;
+                LCD_display();
+            } else if (event == EVENT_THRESHOLE_CHANGE) {
+                threshold = *(float*)data;
+                control();
+            } else if (event == EVENT_AUTO_UPDATE) {
+                status = (*distanceValue < threshold);
+                Serial.printf("AUTO: Distance: %f, Thresshold: %f\n", *distanceValue, threshold);
+                control();
+            }
+            break;
+        default:
+            break;
         }
     }
     xSemaphoreGive(mutex);
