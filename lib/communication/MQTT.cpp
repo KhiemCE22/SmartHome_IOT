@@ -34,6 +34,7 @@ void setupMQTT() {
         client.subscribe(TOPIC_SUB_FAN);
         client.subscribe(TOPIC_SUB_LED);
         client.subscribe(TOPIC_SUB_DOOR);
+        client.subscribe(TOPIC_SUB_BUZZER);
         // ...
     } else {
         Serial.print("failed with state ");
@@ -222,6 +223,38 @@ void mqttCallback(char* topic, byte* payload, unsigned int length){
                 Serial.printf("Failed to send data to queue for device\n" );
             }
         }
+    }
+    else if (topicStr == TOPIC_SUB_BUZZER){
+        String action = doc["action"];
+        if (action == "set_mode"){
+            Mode mode = (Mode) doc["mode"];
+            EventData eventData;
+            eventData.event = EVENT_SET_MODE;
+            eventData.data.modeValue = mode;
+            Serial.printf("Set mode for device\n" );
+            Serial.printf("Mode: %d\n", mode);
+            if (xQueueSend(queueMappings[BUZZERQUEUE].queue, &eventData, 0) != pdTRUE) {
+                Serial.printf("Failed to send data to queue for device\n" );
+            }
+        }
+        else if (action == "manual_control"){
+            bool status = doc["status"];
+            EventData eventData;
+            eventData.event = EVENT_MANUAL_CONTROL;
+            eventData.data.boolValue = status;  
+        }
+        else if(action == "set_threshold"){
+            float threshold = doc["threshold"];
+            EventData eventData;
+            eventData.event = EVENT_THRESHOLE_CHANGE;
+            eventData.data.floatValue = threshold;
+            Serial.printf("Set thresshold for device\n" );
+            Serial.printf("Thresshold: %f\n", threshold);
+            if (xQueueSend(queueMappings[BUZZERQUEUE].queue, &eventData, 0) != pdTRUE) {
+                Serial.printf("Failed to send data to queue for device\n" );
+            }
+        }
+        // can set amplitude
     }
     //...
 }

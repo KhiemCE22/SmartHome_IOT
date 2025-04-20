@@ -234,3 +234,53 @@ void Door::handleEvent(Event event, void* data){
     }
     xSemaphoreGive(mutex);
 }
+
+void Buzzer::handleEvent(Event event, void* data) {
+    xSemaphoreTake(mutex, portMAX_DELAY);
+    bool prevStatus = status; // Lưu trạng thái trước đó
+    if (event == EVENT_SET_MODE) {
+        Mode newMode = *(Mode*)data;
+        if (newMode == MANUAL || newMode == AUTO) {
+            currentMode = newMode;
+        }
+    } else {
+        switch (currentMode) {
+            case MANUAL:
+                if (event == EVENT_MANUAL_CONTROL) {
+                    status = *(bool*)data;
+                    control();
+                }
+                // event test for beep
+                break;
+            case AUTO:
+                if (event == EVENT_THRESHOLE_CHANGE) {
+                    threshold = *(float*)data;
+                } else if (event == EVENT_MANUAL_CONTROL) {
+                    status = *(bool*)data;
+                    control();
+                } else if (event == EVENT_AUTO_UPDATE) {
+                    status = (*LPGppmValue > threshold);
+                    Serial.printf("AUTO: GasValue %f, Threshold: %f\n", *LPGppmValue, threshold);
+                    control();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    // Quản lý task dựa trên thay đổi trạng thái
+    if (status && !prevStatus && buzzerTaskHandle == NULL) {
+        // Tạo task khi chuyển từ OFF sang ON
+        xTaskCreate(buzzerTask, "AlarmTask", 2048, this, 1, &buzzerTaskHandle);
+        Serial.println("Buzzer task created");
+    } else if (!status && prevStatus && buzzerTaskHandle != NULL) {
+        // Xóa task khi chuyển từ ON sang OFF
+        vTaskDelete(buzzerTaskHandle);
+        buzzerTaskHandle = NULL;
+        isBeeping = false;
+        noTone(BuzzerPin);
+        digitalWrite(BuzzerPin, LOW);
+        Serial.println("Buzzer task deleted");
+    }
+    xSemaphoreGive(mutex);
+}

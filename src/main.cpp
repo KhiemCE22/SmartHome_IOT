@@ -2,7 +2,7 @@
 #include "global.h"
 #include "MQTT.h"
 #include "tasks.h"
-
+#include "sensors.h"
 
 
 void setup() {
@@ -14,7 +14,7 @@ void setup() {
   }
   setupMQTT();
   pinSetup();
-
+  setUpMQ2();
   // Initialize I2C
   Serial.println("I2C initialized");
 
@@ -25,10 +25,12 @@ void setup() {
   doorQueue = xQueueCreate(10, sizeof(EventData));
   ledQueue = xQueueCreate(10, sizeof(EventData));
   fanQueue = xQueueCreate(10, sizeof(EventData));
-  QueueHandle_t queues[] = {fanQueue,ledQueue, doorQueue};
+  buzzerQueue = xQueueCreate(10, sizeof(EventData));
+  QueueHandle_t queues[] = {fanQueue,ledQueue, doorQueue, buzzerQueue};
   queueMappings[0] = {&fanDevice, fanQueue, xSemaphoreCreateMutex()};
   queueMappings[1] = {&ledDevice, ledQueue, xSemaphoreCreateMutex()};
   queueMappings[2] = {&doorDevice, doorQueue, xSemaphoreCreateMutex()};
+  queueMappings[3] = {&buzzerDevice, buzzerQueue, xSemaphoreCreateMutex()};
     // Kiểm tra xem hàng đợi và mutex có được khởi tạo thành công không
   for (int i = 0; i < DEVICECOUNT; i++) {
       if (queueMappings[i].queue == NULL || queueMappings[i].mutex == NULL) {
@@ -43,6 +45,7 @@ void setup() {
   xTaskCreate(deviceTask, "DoorTask", 2048, &queueMappings[DOORQUEUE], 1, NULL);
   xTaskCreate(deviceTask, "FanTask", 2048, &queueMappings[FANQUEUE], 1, NULL);
   xTaskCreate(deviceTask, "LEDTask", 2048, &queueMappings[LEDQUEUE], 1, NULL);
+  xTaskCreate(deviceTask, "BuzzerTask", 2048, &queueMappings[BUZZERQUEUE], 1, NULL);
   xTaskCreate(TimerTask, "TimerTask", 2048, queueMappings, 1, NULL);
   xTaskCreate(AutoUpdateTask, "AutoUpdateTask", 2048, queueMappings, 1, NULL);
   xTaskCreate(sensorTask, "SensorTask", 4096, NULL, 1, NULL);

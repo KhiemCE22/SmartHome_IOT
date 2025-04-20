@@ -95,6 +95,7 @@ void sensorTask(void* param) {
         readHumidity();     // Đọc độ ẩm
         readLight();       // Đọc ánh sáng
         readDistance();     // Đọc khoảng cách
+        readGas();         // Đọc khí gas
         PublishData data;
         // Gửi dữ liệu nhiệt độ
         strcpy(data.topic, TOPIC_PUB_TEMP);           // TOPIC_PUB_TEMP là hằng số đã khai báo
@@ -138,6 +139,17 @@ void sensorTask(void* param) {
             }
             xSemaphoreGive(publishQueueMutex);
             Serial.println("Distance: " + String(distanceValue));
+        }
+        // Gửi dữ liệu khí gas ppm
+        strcpy(data.topic, TOPIC_PUB_GAS);      // TOPIC_PUB_GAS là hằng số đã khai báo
+        strcpy(data.message, String(LPGppmValue).c_str());
+        if (xSemaphoreTake(publishQueueMutex, portMAX_DELAY)) {
+            if (xQueueSend(publishQueue, &data, 0) != pdTRUE) {
+                Serial.println("Failed to send data to publish queue");
+                Serial.printf("Items in publishQueue: %d\n", uxQueueMessagesWaiting(publishQueue));
+            }
+            xSemaphoreGive(publishQueueMutex);
+            Serial.println("GasValue: " + String(LPGppmValue) + " ppm");
         }
         vTaskDelay(pdMS_TO_TICKS(5000)); // Chờ 5 giây trước khi đọc lại
     }

@@ -77,6 +77,9 @@ class Device {
         Mode getMode() {
             return currentMode;
         }
+        bool getStatus() {
+            return status;
+        }
         virtual void handleEvent(Event event, void* data) = 0;
     protected:
         virtual void control()=0;
@@ -211,4 +214,62 @@ class Door: public Device {
             }
         }  
 };
+
+class Buzzer : public Device {
+    private:
+        uint8_t BuzzerPin = BUZZER_PIN;
+        float threshold;
+        float* LPGppmValue;
+        unsigned long beepDuration = 300;
+        unsigned long pauseDuration = 150;
+        bool isBeeping;
+        unsigned long lastBeepTime;
+        TaskHandle_t buzzerTaskHandle = NULL;
+
+        static void buzzerTask(void* param) {
+            Buzzer* buzzer = static_cast<Buzzer*>(param);
+            while (true) {
+                if (buzzer->getStatus()) {
+                    buzzer->control();
+                }
+                vTaskDelay(pdMS_TO_TICKS(100)); // Gọi control mỗi 100ms
+            }
+        }
+    
+    public:
+        Buzzer(float* LPGppmValue, int scheduleSize = 0) 
+            : Device(scheduleSize), threshold(50), LPGppmValue(LPGppmValue), isBeeping(false), lastBeepTime(0) {
+            pinMode(BuzzerPin, OUTPUT);
+            digitalWrite(BuzzerPin, LOW);
+        }
+    
+        ~Buzzer() {
+            if (buzzerTaskHandle != NULL) {
+                vTaskDelete(buzzerTaskHandle);
+                buzzerTaskHandle = NULL;
+            }
+        }
+    
+        void handleEvent(Event event, void* data) override;
+    
+    protected:
+        void control() override {
+            Serial.println("Buzzer status: " + String(status));
+            if (status && !isBeeping) {
+                isBeeping = true;
+                lastBeepTime = millis();
+                tone(BuzzerPin, 1000, beepDuration);
+            } else if (!status && isBeeping) {
+                isBeeping = false;
+                noTone(BuzzerPin);
+                digitalWrite(BuzzerPin, LOW);
+            } else if (status && isBeeping) {
+                unsigned long currentTime = millis();
+                if (currentTime - lastBeepTime >= beepDuration + pauseDuration) {
+                    tone(BuzzerPin, 1000, beepDuration);
+                    lastBeepTime = currentTime;
+                }
+            }
+        }
+    };
 #endif

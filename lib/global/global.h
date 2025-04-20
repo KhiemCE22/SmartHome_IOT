@@ -13,7 +13,6 @@
 #include "credentials.h"
 #include "device.h"
 #include "tasks.h"
-
 #define SCHEDULE_SIZE 2
 // GPIO configuration
 #define BUZZER_PIN 25     //  BUZZER_PIN
@@ -31,11 +30,11 @@
 #define SCLPIN 22
 
 
-#define DEVICECOUNT 3// include fan, led, door
+#define DEVICECOUNT 4// include fan, led, door, buzzer
 #define FANQUEUE 0
 #define LEDQUEUE 1
 #define DOORQUEUE 2
-
+#define BUZZERQUEUE 3
 // configuration NTP
 
 
@@ -57,15 +56,17 @@ extern PubSubClient client;
 extern QueueHandle_t doorQueue;
 extern QueueHandle_t fanQueue;
 extern QueueHandle_t ledQueue;
-
+extern QueueHandle_t buzzerQueue;
 extern QueueHandle_t publishQueue;
 
 
 extern Fan fanDevice;
 extern LED ledDevice;
 extern Door doorDevice;
+extern Buzzer buzzerDevice;
+
 extern float distanceValue;
-// extern float gasValue;
+extern float LPGppmValue;
 extern float temperatureValue;
 extern float humidityValue;
 extern float lightValue;
