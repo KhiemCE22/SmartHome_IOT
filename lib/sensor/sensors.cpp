@@ -47,19 +47,22 @@ void setUpMQ2(){
     float sensorValue = 0.1;
     for (int i = 0; i < 20; i++){
         sensorValue += analogRead(MQ2_PIN);
+        Serial.println("Sensor value: " + String(sensorValue));
         vTaskDelay(pdMS_TO_TICKS(10));
     }
     sensorValue = sensorValue/20;
-    Rs_of_Air =  (1024 - sensorValue)/sensorValue; //Rs_of_Air = Vin - Vout / Vout
+    Serial.println("Average Sensor value: " + String(sensorValue));
+    Rs_of_Air =  (4095 - sensorValue)/sensorValue; //Rs_of_Air = Vin - Vout / Vout
     R0 = Rs_of_Air/9.8; // 9.8 is the value of Rs_of_Air/R0 in clean air
-    Serial.println("R0: " + String(Rs_of_Air));
+    Serial.println("Rs: " + String(Rs_of_Air));
+    Serial.println("R0: " + String(R0));
 }
 
 void readGas()
 {
     // return in ppm unit
     uint16_t sensorValue = analogRead(MQ2_PIN);
-    Rs_of_Air =  (1024 - sensorValue)/sensorValue; //Rs_of_Air = Vin - Vout / Vout
+    Rs_of_Air =  (4095 - sensorValue)/sensorValue; //Rs_of_Air = Vin - Vout / Vout
     float Rs_R0_ratio = Rs_of_Air/R0; // Rs/R0 ratio
     LPGppmValue = pow(10, ((log10(Rs_R0_ratio) - b)/m)); // calculate ppm using the formula: ppm = 10^((log10(Rs/R0) - b)/m)
     

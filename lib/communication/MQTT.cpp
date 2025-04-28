@@ -242,6 +242,11 @@ void mqttCallback(char* topic, byte* payload, unsigned int length){
             EventData eventData;
             eventData.event = EVENT_MANUAL_CONTROL;
             eventData.data.boolValue = status;  
+            Serial.printf("Manual control for device\n" );
+            Serial.printf("Status: %d\n", status);
+            if (xQueueSend(queueMappings[BUZZERQUEUE].queue, &eventData, 0) != pdTRUE) {
+                Serial.printf("Failed to send data to queue for device\n" );
+            }
         }
         else if(action == "set_threshold"){
             float threshold = doc["threshold"];
